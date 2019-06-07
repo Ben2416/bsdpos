@@ -23,6 +23,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<h5>Warehouse Expenses</h5>
 				</div>
 				<div class="widget-content nopadding">
+					
+					<div class="" style="padding:10px;">
+						<a class="btn btn-success" href="<?=base_url('expenses/add')?>"><i class="icon icon-plus"></i> Add Expense</a>
+					</div>
+					
 					<div class="widget-box">
 						<div class="widget-title">
 							<ul class="nav nav-tabs">
@@ -41,11 +46,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<!--<p> <?=$warehouses[$i]['warehouse_name']?></p>-->
 								
 								<div class="widget-box collapsible">
-									<div class="widget-title"> <a data-toggle="collapse" href="#collapseOne"> <span class="icon"><i class="icon-arrow-right"></i></span>
+									<div class="widget-title"> <a data-toggle="collapse" href="#collapseOne<?=$i?>"> <span class="icon"><i class="icon-arrow-right"></i></span>
 										<h5>Admin Expenses </h5>
 										</a> 
 									</div>
-									<div id="collapseOne" class="collapse in">
+									<div id="collapseOne<?=$i?>" class="collapse in">
 										<div class="widget-content"> 
 											<form class="form-horizontal">
 												<div class="controls controls-row">
@@ -59,24 +64,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											<table class="table table-bordered">
 												<thead>
 													<tr>
-														<th>Expense Itme</th>
+														<th>Expense Item</th>
 														<th>Amount</th>
 													</tr>
 												</thead>
 												<tbody>
+													<?php foreach($expenses as $expense): 
+													if($expense['expense_warehouse'] != $warehouses[$i]['warehouse_id'])
+														continue;
+													if($expense['expense_class'] != 'Admin')
+														continue;
+													?>
 													<tr>
-														<td>Electricity</td>
-														<td>5,000</td>
+														<td><?=$expense['expense_item']?></td>
+														<td>&#8358; <?=number_format($expense['expense_amount'], '2','.',',')?></td>
 													</tr>
+													<?php endforeach; ?>
 												</tbody>
 											</table>
 										</div>
 									</div>
-									<div class="widget-title"> <a data-toggle="collapse" href="#collapseTwo"> <span class="icon"><i class="icon-arrow-right"></i></span>
+									<div class="widget-title"> <a data-toggle="collapse" href="#collapseTwo<?=$i?>"> <span class="icon"><i class="icon-arrow-right"></i></span>
 										<h5>Sales and Distribution Expenses</h5>
 										</a> 
 									</div>
-									<div id="collapseTwo" class="collapse">
+									<div id="collapseTwo<?=$i?>" class="collapse">
 										<div class="widget-content"> 
 											<div class="widget-content"> 
 											<div class="controls controls-row">
@@ -92,20 +104,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													</tr>
 												</thead>
 												<tbody>
+													<?php foreach($expenses as $expense): 
+													if($expense['expense_warehouse'] != $warehouses[$i]['warehouse_id'])
+														continue;
+													if($expense['expense_class'] != 'Sales and Distribution')
+														continue;
+													?>
 													<tr>
-														<td>Electricity</td>
-														<td>5,000</td>
+														<td><?=$expense['expense_item']?></td>
+														<td>&#8358; <?=number_format($expense['expense_amount'], '2','.',',')?></td>
 													</tr>
+													<?php endforeach; ?>
 												</tbody>
 											</table>
 										</div>
 										</div>
 									</div>
-									<div class="widget-title"> <a data-toggle="collapse" href="#collapseThree"> <span class="icon"><i class="icon-arrow-right"></i></span>
+									<div class="widget-title"> <a data-toggle="collapse" href="#collapseThree<?=$i?>"> <span class="icon"><i class="icon-arrow-right"></i></span>
 										<h5>Finance Cost Expenses</h5>
 										</a> 
 									</div>
-									<div id="collapseThree" class="collapse">
+									<div id="collapseThree<?=$i?>" class="collapse">
 										<div class="widget-content"> 
 										
 											<div class="widget-content"> 
@@ -122,10 +141,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													</tr>
 												</thead>
 												<tbody>
+													<?php foreach($expenses as $expense): 
+													if($expense['expense_warehouse'] != $warehouses[$i]['warehouse_id'])
+														continue;
+													if($expense['expense_class'] != 'Finance Cost')
+														continue;
+													?>
 													<tr>
-														<td>Electricity</td>
-														<td>5,000</td>
+														<td><?=$expense['expense_item']?></td>
+														<td>&#8358; <?=number_format($expense['expense_amount'], '2','.',',')?></td>
 													</tr>
+													<?php endforeach; ?>
 												</tbody>
 											</table>
 										</div>

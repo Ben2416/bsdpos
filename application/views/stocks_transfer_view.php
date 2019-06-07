@@ -23,57 +23,64 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<span class="icon"><i class="icon-th"></i></span>
 					<h5>Tansfer</h5>
 				</div>
-				<div class="widget-content nopadding">
+				<div class="widget-content">
+					<?=validation_errors()?>
 					<form class="form-horizontal" method="post" action="<?=base_url('stocks/transfer')?>">
 						<div class="control-group">
-							<label class="control-label">Product :</label>
+							<label class="control-label"> Date : </label>
 							<div class="controls">
-								<table width="70%">
-									<tr>
-										<td>
-											<select name="product_name[]" class="">
-											<?php foreach($products as $pd): ?>
-												<option value="<?=$pd['product_id']?>"><?=$pd['product_name']?></option>
-											<?php endforeach; ?>
-											</select>
-										</td>
-										<td>
-											<input type="number" min="1" class="" name="product_quantity[]" placeholder="product quantity" />
-										</td>
-										<td>
-											<button><i class="icon icon-trash"></i></button>
-										</td>
-									</tr>
-								</table>
-								<div>
-									<button class="btn btn-primary"><i class="icon icon-plus"></i> Add Product</button>
-								</div>
+								<input type="text" required name="transfer_date" class="datepicker" data-date-format="dd-mm-yyyy" />
 							</div>
-							
-							
-						</div>
+						</dv>
 						<div class="control-group">
 							<label class="control-label">From :</label>
 							<div class="controls">
-								<select name="from_warehouse" class="span6">
+								<select id="from_warehouse" name="from_warehouse" class="span6">
 								<?php foreach($warehouses as $wh): ?>
 									<option value="<?=$wh['warehouse_id']?>"><?=$wh['warehouse_name']?></option>
 								<?php endforeach; ?>
 								</select>
-								<span class="help-block">Warehouse to transfer from</span>
+								<span class="help-block">Warehouse to transfer stock from</span>
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label">To :</label>
 							<div class="controls">
-								<select name="from_warehouse" class="span6">
-								<?php foreach($warehouses as $wh): ?>
-									<option value="<?=$wh['warehouse_id']?>"><?=$wh['warehouse_name']?></option>
-								<?php endforeach; ?>
+								<select id="to_warehouse" name="to_warehouse" class="span6">
+								<?php //foreach($warehouses as $wh): ?>
+									<!--<option value="<?=$wh['warehouse_id']?>"><?=$wh['warehouse_name']?></option>-->
+								<?php //endforeach; ?>
 								</select>
-								<span class="help-block">Warehouse to transfer to</span>
+								<span class="help-block">Warehouse to transfer stock to</span>
 							</div>
 						</div>
+						<div class="control-group">
+							<label class="control-label">Product :</label>
+							<div class="controls">
+								<table id="st_table" class="table">
+									<thead>
+										<tr>
+											<th>Product</th>
+											<th>Quantity</th>
+											<th>Available</th>
+											<th>Remove</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!--<tr>
+											<td><input name="product_name[]" class="span12"></td>
+											<td><input type="number" min="1" class="" name="product_quantity[]" placeholder="product quantity" /></td>
+											<td><span class="span12" id="product_available[]">0</span></td>
+											<td><a class="btn btn-danger" onclick="$(this).closest('tr').remove();"><i class="icon icon-trash"></i></a></td>
+										</tr>-->
+									</tbody>
+								</table>
+								<div class="">
+									<a class="btn btn-primary" id="add_product"><i class="icon icon-plus"></i> Add Product</a>
+								</div>
+							</div>
+						</div>
+						
 						<div class="form-actions">
 							<button type="submit" class="btn btn-success">Transfer Stock</button>
 						</div>

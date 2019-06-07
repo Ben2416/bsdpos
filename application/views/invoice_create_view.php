@@ -17,7 +17,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="row-fluid">
 		<div class="span12">
 		
+			<form method="post" action="<?=base_url('invoice/create/').$invoice_category.'/'.$invoice_type?>" >
 			
+			<?php echo validation_errors(); ?>
 			
 			<div class="widget-box">
 				<div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
@@ -51,7 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<tr><td><label class="control-label">Select Warehouse</label></td></tr>
 									<tr>
 										<td>
-											<select class="">
+											<select class="" name="invoice_warehouse">
 											<?php foreach($warehouses as $wh): ?>
 												<option value="<?=$wh['warehouse_id']?>"><?=$wh['warehouse_name']?></option>
 											<?php endforeach; ?>
@@ -66,25 +68,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<tbody>
 									<tr>
 										<td class="width30">Invoice ID:</td>
-										<td class="width70"><strong><input type="text" name="invoice_id" placeholder="invoice_id" /></strong></td>
+										<td class="width70"><strong><input type="text" name="invoice_id" placeholder="invoice_id" value="<?=$last_invoice+1?>" disabled /></strong></td>
 									</tr>
 									<tr>
 										<td>Issue Date:</td>
-										<td><strong><input type="text" class="datepicker" data-date="<?=date('d-m-Y')?>" data-date-format="dd-mm-yyyy" placeholder="issue date" /></strong></td>
+										<td><strong><input type="text" name="invoice_issue_date" class="datepicker" data-date="<?=date('d-m-Y')?>" data-date-format="dd-mm-yyyy" placeholder="issue date" value="<?=set_value('invoice_issue_date')?>" requried/></strong></td>
 									</tr>
 									<tr>
 										<td>Due Date:</td>
-										<td><strong><input type="text" class="datepicker" data-date="<?=date('d-m-Y')?>" data-date-format="dd-mm-yyyy" placeholder="due date" /></strong></td>
+										<td><strong><input type="text" name="invoice_due_date" class="datepicker" data-date="<?=date('d-m-Y')?>" data-date-format="dd-mm-yyyy" placeholder="due date" value="<?=set_value('invoice_due_date')?>" required/></strong></td>
 									</tr>
 									<tr>
 										<td class="width30">Client Address:</td>
 										<td class="width70">
 											<table class="">
 												<tbody>
-													<tr><td>Name: </td><td><strong><input type="text" placeholder="Customer" /></strong> </td></tr>
-													<tr><td>Address: </td><td><textarea name="address" placeholder="address"></textarea> </td></tr>
-													<tr><td>Contact No: </td><td><input type="text" placeholder="Phone" /> </td></tr>
-													<tr><td>Email: </td><td><input type="email" placeholder="email" /> </td></tr>
+													<tr><td>Name: </td><td><strong><input type="text" name="invoice_customer_name" placeholder="Customer" value="<?=set_value('invoice_customer_name')?>" required /></strong> </td></tr>
+													<tr><td>Phone: </td><td><input type="text" name="invoice_customer_phone" placeholder="Phone" value="<?=set_value('invoice_customer_phone')?>" required /> </td></tr>
+													<tr><td>Email: </td><td><input type="email" name="invoice_customer_email" placeholder="email" value="<?=set_value('invoice_customer_email')?>" required /> </td></tr>
+													<tr><td>Address: </td><td><textarea name="invoice_customer_address" placeholder="address" required><?=set_value('invoice_customer_address')?></textarea> </td></tr>
 												</tbody>
 											</table>
 										</td>
@@ -106,20 +108,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</tr>
 								</thead>
 							<tbody>
-								<tr>
+								<!--<tr>
 									<td><input type="text" name="item_name[]" id="item_name[]" placeholder="Item name" /><input type="hidden" name="item[]" /></td>
 									<td><input type="number" class="qty" name="quantity[]" value="1" min="1" placeholder="Quantity" /></td>
 									<td class="right">
-										<select class="span6" name="item_price[]">
-											<option>retail price</option>
-											<option>wholesale price</option>
-											<option>supply price</option>
-										</select>  &nbsp;
+										<select class="span6" name="item_price[]" id="item_price[]">
+										</select>  &n`````````bsp;
 										<input type="text" name="rate[]" value="0" placeholder="rate" class="span6" disabled/>
 									</td>
 									<td class="right"><div id="items_amount[]"><strong>$ </strong></div><input type="hidden" name="amount[]" /></td>
 									<td> <a class="btn btn-danger"  onClick="$(this).closest('tr').remove();"><i class="icon icon-trash"></i></a></td>
-								</tr>
+								</tr>-->
 							</tbody>
 						</table>
 						<div class="controls controls-row">
@@ -129,44 +128,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<table class="table table-bordered table-invoice-full">
 							<tbody>
 								<tr>
-									<td class="msg-invoice" width="85%"><h4>Payment method: </h4>
-										<a href="#" class="tip-bottom" title="Cash Deposit">Cash Deposit</a> |  <a href="#" class="tip-bottom" title="Bank Transfer">Bank Transfer</a> </td>
-									<td class="right"><strong>Subtotal</strong> <br>
-										<strong>Tax (5%)</strong> <br>
-										<strong>Discount</strong></td>
-									<td class="right"><strong>$16,800 <br>
-										$100 <br>
-										$50</strong></td>
+									<td class="msg-invoice" width="70%">
+										<h4>Payment Terms: </h4>
+												<select name="invoice_payment_term">
+													<option value="1" <?=set_select('myselect', '1'); ?>>Payment on Delivery</option>
+													<option value="2" <?=set_select('myselect', '2'); ?>>Payment on return</option>
+												</select>
+									</td>
+									<td class="right" width="13%"><strong>Subtotal</strong> <br>
+										<strong>Discount</strong> <br>
+										<strong>Extra Discount</strong>
+									</td>
+									<td class="right"><strong> &#8358; <span id="stotal">0.00</span> <br>
+										&#8358; 0.00 <br>
+										&#8358; </strong><input type="number" name="invoice_extra_discount" id="invoice_extra_discount" min="0" value="0" class="span6 m-wrap" />
+									</td>
 								</tr>
 							</tbody>
 						</table>
-						<div class="">
-							<table class="table table-bordered span6">
-								<tbody>
-									<tr>
-										<td>
-											<div class="form-controls">
-												<label class="control-label span12">Payment Terms: </label><br/>
-												<select class="control span12">
-													<option>Payment on Delivery</option>
-													<option>Payment on return</option>
-												</select>
-											</div>
-										</td>
-									</tr>	
-								</tbody>
-							</table>
-						</div>
 						<div class="pull-right">
-							<h4><span>Grand Total:</span> $<span id="gtotal">16,850.00<span></h4>
+							<h4><span>Grand Total:</span> &#8358; <span id="gtotal">0.00</span></h4>
 							<br>
-							<a class="btn btn-primary btn-large pull-right" href="">Pay Invoice</a> </div>
+							<button type="submit" class="btn btn-primary btn-large pull-right">Generate Invoice</button> </div>
 						</div>
 					</div>
 				</div>
 			</div>
-
 			
+			<input type="hidden" name="invoice_subtotal" id="invoice_subtotal" />
+			<input type="hidden" name="invoice_total" id="invoice_total" />
+
+			</form>
 			
 		</div>
 		

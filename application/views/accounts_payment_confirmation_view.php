@@ -37,11 +37,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<tbody>
 							<tr>
 								<td><?=$invoice_id?></td>
-								<td>Mr. Simeon Afolabi</td>
-								<td>$12,000</td>
-								<td>$2,000</td>
-								<td>10,000</td>
-								<td><span class="label label-info">Partly Paid</span></td>
+								<td><?=$invoice['customer_name']?></td>
+								<td>&#8358; <?=$invoice['invoice_total']?></td>
+								<td>&#8358; <?=number_format($amount_paid, 2, '.', ',')?></td>
+								<td>&#8358; <?=number_format($balance, 2, '.', ',')?></td>
+								<td>
+								<?php if($balance == $invoice['invoice_total']){
+										echo '<span class="label label-important">Not Paid</span>';
+									}elseif($amount_paid > 0 && $amount_paid < $invoice['invoice_total']){
+										echo '<span class="label label-info">Partly Paid</span>';
+									}elseif($amount_paid == $invoice['invoice_total']){
+										echo '<span class="label label-success">Fully Paid</span>';
+									}?>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -58,17 +66,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<h5>Payment Confirmation</h5>
 				</div>
 				<div class="widget-content nopadding">
-					<form class="form-horizontal">
+					<form class="form-horizontal" method="post" action="<?=base_url('accounts/payment_confirmation/').$invoice_id?>">
+						<?=validation_errors()?>
 						<div class="control-group">
 							<label class="control-label">Invoice Number : </label>
 							<div class="controls">
-								<input type="text" class="span11" placeholder="Product name" name="product_name" value="<?=$invoice_id?>" disabled >
+								<input type="text" class="span11" placeholder="Payment Invoice" name="payment_invoice" value="<?=$invoice_id?>" disabled >
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">Date: </label>
+							<div class="controls">
+								<input type="text" name="payment_date" class="datepicker span11" data-date-format="dd-mm-yyyy" />
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label">Payment Type: </label>
 							<div class="controls">
-								<select name="payment_type">
+								<select name="payment_type" class="span11">
 									<option>Cash</option>
 									<option>Cheque</option>
 									<option>Bank Transfer</option>
@@ -79,12 +94,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="control-group">
 							<label class="control-label">Payment Amount : </label>
 							<div class="controls">
-								<input type="number" min="0" class="span11" placeholder="Payment Amount" name="product_name" value="" >
+								<input type="number" min="0" max="<?=($balance)?>" class="span11" placeholder="Payment Amount" name="payment_amount" value="" >
 							</div>
 						</div>
+						<?php if($amount_paid != $invoice['invoice_total']): ?>
 						<div class="form-actions">
 							<button type="submit" class="btn btn-success">Add Payment</button>
 						</div>
+						<?php endif; ?>
 					</form>
 				</div>
 			</div>
@@ -107,11 +124,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</tr>
 						</thead>
 						<tbody>
+						<?php foreach($payments as $pay): ?>
 							<tr>
-								<td>31-05-2019</td>
-								<td>2,000</td>
-								<td>Bank Transfer</td>
+								<td><?=$pay['payment_date']?></td>
+								<td><?=number_format($pay['payment_amount'], 2, '.', ',')?></td>
+								<td><?=$pay['payment_type']?></td>
 							</tr>
+						<?php endforeach; ?>
 						</tbody>
 					</table>
 				</div>

@@ -52,11 +52,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<tbody>
 									<?php foreach($invoices as $invoice): ?>
 									<tr>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td><a href="#">Edit</a> | <a href="#">Remove</a></td>
+										<td><a href="<?=base_url('invoice/get/').$invoice['invoice_txn_id']?>"><?=$invoice['invoice_txn_id']?></a></td>
+										<td><?=$invoice['invoice_category']?></td>
+										<td><?=$invoice['customer_name']?></td>
+										<td>&#8358; <?=number_format($invoice['invoice_total'], 2, '.', ',')?></td>
+										<td><a href="<?=base_url('invoice/edit/').$invoice['invoice_id']?>"><i class="icon icon-edit"></i> Edit</a> | <a href="<?=base_url('invoice/get/').$invoice['invoice_id']?>"><i class="icon icon-trash"></i> Remove</a></td>
 									</tr>
 									<?php endforeach; ?>
 								</tbody>

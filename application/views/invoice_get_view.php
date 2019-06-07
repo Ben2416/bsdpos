@@ -52,22 +52,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<tr>
 										<tr>
 											<td class="width30">Invoice ID:</td>
-											<td class="width70"><strong>ED-6546234</strong></td>
+											<td class="width70"><strong><?=$invoice['invoice_txn_id']?></strong></td>
 										</tr>
 										<tr>
 											<td>Issue Date:</td>
-											<td><strong><?=date('M d, Y')?></strong></td>
+											<td><strong><?=$invoice['invoice_issue_date']?></strong></td>
 										</tr>
 										<tr>
 											<td>Due Date:</td>
-											<td><strong>April 01, 2021</strong></td>
+											<td><strong><?=$invoice['invoice_due_date']?></strong></td>
 										</tr>
 										<td class="width30">Client Address:</td>
-											<td class="width70"><strong>Torera Nigeria LTD</strong> <br>
-											2 Jereton Mariere, Apo Legislative Quarters <br>
-											Abuja<br>
-											Contact No: 0803 000 0000 <br>
-											Email: simeona@torera.com </td>
+											<td class="width70"><i class="icon icon-list-alt"></i> Name: <strong><?=$invoice['customer_name']?></strong> <br>
+											<i class="icon icon-home"></i> Address: <?=$invoice['customer_address']?> <br/>
+											<i class="icon icon-phone"></i> Phone: <?=$invoice['customer_phone']?> <br/>
+											<i class="icon icon-envelope"></i> Email: <?=$invoice['customer_email']?> <br/>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -85,73 +85,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</tr>
 								</thead>
 							<tbody>
+								<?php foreach($invoice_items as $ii): ?>
 								<tr>
-									<td>Guiness Malt</td>
-									<td>2</td>
-									<td class="right">150</td>
-									<td class="right"><strong>$300</strong></td>
+									<td><?=$ii['product_name']?></td>
+									<td><?=$ii['invoice_item_quantity']?></td>
+									<td class="right">&#8358; <?=$ii['invoice_item_price']?></td>
+									<td class="right"><strong>&#8358; <?=$ii['invoice_item_total']?></strong></td>
 								</tr>
-								<tr>
-									<td>Coca Cola</td>
-									<td>12</td>
-									<td class="right">1000</td>
-									<td class="right"><strong>$1,2000</strong></td>
-								</tr>
-								<tr>
-									<td>Miranda</td>
-									<td>17</td>
-									<td class="right">100</td>
-									<td class="right"><strong>$1,700</strong></td>
-								</tr>
-								<tr>
-									<td>Sprite</td>
-									<td>10</td>
-									<td class="right">255</td>
-									<td class="right"><strong>$2,550</strong></td>
-								</tr>
-								<tr>
-									<td>Beta Malt</td>
-									<td>5</td>
-									<td class="right">50</td>
-									<td class="right"><strong>$250</strong></td>
-								</tr>
+								<?php endforeach; ?>
 							</tbody>
 						</table>
 						<table class="table table-bordered table-invoice-full">
 							<tbody>
 								<tr>
-									<td class="msg-invoice" width="85%"><h4>Payment method: </h4>
-										<a href="#" class="tip-bottom" title="Cash Deposit">Cash Deposit</a> |  <a href="#" class="tip-bottom" title="Bank Transfer">Bank Transfer</a> </td>
-									<td class="right"><strong>Subtotal</strong> <br>
-										<strong>Tax (5%)</strong> <br>
-										<strong>Discount</strong></td>
-									<td class="right"><strong>$16,800 <br>
-										$100 <br>
-										$50</strong></td>
+									<td class="msg-invoice" width="70%"><h4>Payment Terms: </h4>
+										<?=($invoice['invoice_payterms']==1)?'Payment on Delivery':'Payment on return'?>
+									</td>
+									<td class="right" width="12%"><strong>Subtotal</strong> <br>
+										<strong>Tax </strong> <br>
+										<strong>Discount</strong>
+									</td>
+									<td class="right" width="18%"><strong>&#8358; <?=$invoice['invoice_subtotal']?> <br>
+										&#8358; <?=$invoice['invoice_tax']?> <br>
+										&#8358; <?=$invoice['invoice_discount']?></strong>
+									</td>
 								</tr>
 							</tbody>
 						</table>
-						<div class="">
-							<table class="table table-bordered">
-								<tbody>
-									<tr>
-										<td>
-											<div class="form-controls">
-												<label class="span6">Payment Terms: </label>
-												<select class="control span6">
-													<option>Payment on Delivery</option>
-													<option>Payment on return</option>
-												</select>
-											</div>
-										</td>
-									</tr>	
-								</tbody>
-							</table>
-						</div>
 						<div class="pull-right">
-							<h4><span>Grand Total:</span> $16,850.00</h4>
-							<br>
-							<a class="btn btn-primary btn-large pull-right" href="">Pay Invoice</a> </div>
+							<h4><span>Grand Total:</span> &#8358; <?=$invoice['invoice_total']?></h4>
 						</div>
 					</div>
 				</div>

@@ -49,7 +49,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="control-group">
 							<label class="control-label">Product Price</label>
 							<div class="controls">
-								<input type="number" class="span2" placeholder="product price" name="product_price" value="<?=set_value('product_price')?>" min="0" > 
 								<input type="number" class="span3" placeholder="Wholesale price" name="wholesale_price" value="<?=set_value('wholesale_price')?>" min="0" > 
 								<input type="number" class="span3" placeholder="Supply price" name="supply_price" value="<?=set_value('supply_price')?>" min="0" > 
 								<input type="number" class="span3" placeholder="Retail price" name="retail_price" value="<?=set_value('retail_price')?>" min="0" > 

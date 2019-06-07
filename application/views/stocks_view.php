@@ -55,11 +55,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												</tr>
 											</thead>
 											<tbody>
-												<?php foreach($stocks as $stock): ?>
+												<?php foreach($stocks as $stock): 
+													if($stock['stock_warehouse'] != $warehouses[$i]['warehouse_id'])
+														continue;
+												?>
 												<tr>
-													<td><?=$stock['stock_product']?></td>
+													<td><?=$stock['product_name']?></td>
 													<td><?=$stock['stock_quantity']?></td>
-													<td></td>
+													<td>&#8358; <?=number_format(($stock['stock_quantity']*$stock['product_wholesale_price']),2,'.',',')?></td>
 													<td><a href="#">Edit</a> | <a href="#">Remove</a></td>
 												</tr>
 												<?php endforeach; ?>

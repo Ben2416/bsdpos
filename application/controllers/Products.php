@@ -21,10 +21,9 @@ class Products extends CI_Controller {
 		$data['active'] = 'products';
 		$data['warehouses'] = $this->products->getWarehouses();
 		
-		$this->form_validation->set_error_delimiters('','');
+		$this->form_validation->set_error_delimiters('<div class="alert alert-error"><button class="close" data-dismiss="alert">×</button>','</div>');
 		$this->form_validation->set_rules('product_name', "Product name", 'trim|required');
 		$this->form_validation->set_rules('product_description', "Product Description", 'trim|required');
-		$this->form_validation->set_rules('product_price', "Product Price", 'trim|required');
 		$this->form_validation->set_rules('wholesale_price', "Wholesale Price", 'trim|required');
 		$this->form_validation->set_rules('supply_price', "Supply Price", 'trim|required');
 		$this->form_validation->set_rules('retail_price', "Retail Price", 'trim|required');
@@ -55,10 +54,10 @@ class Products extends CI_Controller {
 		$data['product_id'] = $product_id;
 		
 		
-		$this->form_validation->set_error_delimiters('','');
+		$this->form_validation->set_error_delimiters('<div class="alert alert-error"><button class="close" data-dismiss="alert">×</button>','</div>');
 		$this->form_validation->set_rules('product_name', "Product name", 'trim|required');
 		$this->form_validation->set_rules('product_description', "Product Description", 'trim|required');
-		$this->form_validation->set_rules('product_price', "Product Price", 'trim|required');
+		//$this->form_validation->set_rules('product_price', "Product Price", 'trim|required');
 		$this->form_validation->set_rules('wholesale_price', "Wholesale Price", 'trim|required');
 		$this->form_validation->set_rules('supply_price', "Supply Price", 'trim|required');
 		$this->form_validation->set_rules('retail_price', "Retail Price", 'trim|required');
@@ -93,8 +92,14 @@ class Products extends CI_Controller {
 		}
 	}
 	
+	//auto complete
 	public function getProduct(){
 		echo json_encode( $this->products->getProductsWhere( $this->input->post('product', true) )  );
+	}
+	
+	//auto complete
+	public function getProductWithStock(){
+		echo json_encode( $this->products->getProductsWithStockWhere( $this->input->post('product', true), $this->input->post('warehouse', true) )  );
 	}
 	
 }

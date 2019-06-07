@@ -12,6 +12,7 @@ class Sales extends CI_Controller {
 		$data['active'] = 'sales';
 		
 		$data['warehouses'] = $this->sales->getWarehouses();
+		$data['invoices'] = $this->sales->getInvoices();
 		
 		$this->load->view('header_view', $data);
 		$this->load->view('sidebar_view');

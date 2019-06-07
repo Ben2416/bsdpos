@@ -35,7 +35,7 @@ class Users extends CI_Controller{
 		}else{
 			$login = $this->users->login();
 			if($login == 0){
-				echo 'login successful';
+				//echo 'login successful';
 				$user = $this->users->getUser();
 				$this->session->set_userdata($user);
 				$this->session->set_userdata('loggedin', true);

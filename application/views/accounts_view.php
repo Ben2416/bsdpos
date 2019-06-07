@@ -48,6 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										<table class="table table-bordered">
 											<thead>
 												<tr>
+													<th>Date</th>
 													<th>Invoice Number</th>
 													<th>Customer Info</th>
 													<th>Sales Amount</th>
@@ -55,24 +56,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												</tr>
 											</thead>
 											<tbody>
+											<?php foreach($invoices as $invoice):
+												if($invoice['invoice_warehouse'] != $warehouses[$i]['warehouse_id'])
+													continue;
+											?>
 												<tr>
-													<td><a href="<?=base_url('accounts/payment_confirmation/')?>2341234">2341234</a></td>
-													<td>Mr. Simeon Afolabi</td>
-													<td>$12,000</td>
-													<td><span class="label label-info">Partly Paid</span></td>
+													<td><?=$invoice['invoice_issue_date']?></td>
+													<td><a href="<?=base_url('accounts/payment_confirmation/').$invoice['invoice_txn_id']?>"><?=$invoice['invoice_txn_id']?></a></td>
+													<td><?=$invoice['customer_name']?></td>
+													<td>&#8358; <?=$invoice['invoice_total']?></td>
+													<td>
+													<?php switch($invoice['invoice_status']){
+														case 0:{
+															echo '<span class="label label-important">Not Paid</span>';
+															break;
+														}
+														case 1:{
+															echo '<span class="label label-info">Partly Paid</span>';
+															break;
+														}
+														case 2:{
+															echo '<span class="label label-success">Fully Paid</span>';
+															break;
+														}
+														default:{};
+													} ?>
+													
+													</td>
 												</tr>
-												<tr>
-													<td>2341544</td>
-													<td>Mr. Balogun David</td>
-													<td>&#x20A6;$22,000</td>
-													<td><span class="label label-important">Not Paid</span></td>
-												</tr>
-												<tr>
-													<td>2341545</td>
-													<td>Madam Betty</td>
-													<td>&#8358;$54,000</td>
-													<td><span class="label label-success">Fully Paid</span></td>
-												</tr>
+											<?php endforeach; ?>
 											</tbody>
 										</table>
 									</div>
