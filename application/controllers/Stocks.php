@@ -6,6 +6,7 @@ class Stocks extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model("Stocks_model", "stocks");
+		$this->load->model("Invoice_model", "invoice");
 	}
 	
 	public function index(){
@@ -25,8 +26,11 @@ class Stocks extends CI_Controller {
 		$data['warehouses'] = $this->stocks->getWarehouses();
 		$data['products'] = $this->stocks->getProducts();
 		
+		$data['stock_transfers'] = $this->stocks->getStockTransfers();
+		//print_r($data['stock_transfers'][0]);exit;
+		
 		$this->form_validation->set_error_delimiters('<div class="alert alert-error"><button class="close" data-dismiss="alert">×</button>','</div>');
-		$this->form_validation->set_rules('transfer_date', 'Transfer Date', 'trim|required');
+		//$this->form_validation->set_rules('transfer_date', 'Transfer Date', 'trim|required');
 		$this->form_validation->set_rules('from_warehouse', 'From Warehouse', 'trim|required');
 		$this->form_validation->set_rules('to_warehouse', 'To Warehouse', 'trim|required');
 		$this->form_validation->set_rules('product_name[]', 'Product Name', 'trim|required');
@@ -42,7 +46,7 @@ class Stocks extends CI_Controller {
 			$items = count($this->input->post('product_name[]', true));
 			for($i=0; $i<$items; $i++){
 				$stock_trans[] = array(
-					'stock_date' => $this->input->post('transfer_date', true),
+					//'stock_date' => $this->input->post('transfer_date', true),
 					'stock_product' => $this->input->post('product[]', true)[$i],
 					'stock_quantity' => $this->input->post('product_quantity[]', true)[$i],
 					'from_warehouse' => $this->input->post('from_warehouse', true),
@@ -61,15 +65,56 @@ class Stocks extends CI_Controller {
 		
 	}
 	
-	public function return(){
+	public function returns(){
 		$data['active'] = 'stocks';
 		
-		$data['warehouses'] = $this->stocks->getWarehouses();
-		$data['products'] = $this->stocks->getProducts();
+		$data['stock_returns'] = $this->stocks->getStockReturns();
 		
 		$this->load->view('header_view', $data);
 		$this->load->view('sidebar_view');
-		$this->load->view('stocks_return_view');
+		$this->load->view('stock_returns_view');
+		$this->load->view('footer_view');
+	}
+	
+	public function return($invoice_id){
+		$data['active'] = 'stocks';
+		$data['page'] = 'return';
+		$data['invoice_id'] = $invoice_id;
+		
+		$data['invoice'] = $this->invoice->getInvoice($invoice_id)[0];
+		$data['invoice_items'] = $this->invoice->getInvoiceItems($invoice_id);
+		
+		$this->form_validation->set_error_delimiters('<div class="alert alert-error"><button class="close" data-dismiss="alert">×</button>','</div>');
+		$this->form_validation->set_rules('return_date', 'Stock Return Date', 'trim|required');
+		$this->form_validation->set_rules('return_amount', 'Stock Return Date', 'trim|required');
+		
+		if($this->form_validation->run() == FALSE){
+			$this->load->view('header_view', $data);
+			$this->load->view('sidebar_view');
+			$this->load->view('stocks_return_view');
+			$this->load->view('footer_view');
+		}else{
+			$stock_return = $this->stocks->stockReturn($data['invoice']);
+			if($stock_return){
+				$this->session->set_flashdata('success', 'Stock returned successfully.');
+				redirect(base_url('stocks'), 'refresh');
+			}else{
+				$this->session->set_flashdata('error', 'Error: Stock not returned.');
+				redirect(base_url('stocks'), 'refresh');
+			}
+		}
+	}
+	
+	public function returninvoice($invoice_id){
+		$data['active'] = 'stocks';
+		$data['invoice_id'] = $invoice_id;
+		
+		$data['return_invoice'] = $this->stocks->getReturnInvoice($invoice_id)[0];
+		$data['return_invoice_items'] = $this->stocks->getReturnInvoiceItems($invoice_id);
+		
+		$this->load->view('header_view', $data);
+		$this->load->view('sidebar_view');
+		$this->load->view('stocks_return_invoice_view');
 		$this->load->view('footer_view');
 	}
 }

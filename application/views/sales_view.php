@@ -88,7 +88,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 															<td><?=$invoice['invoice_type']?></td>
 															<td><?=$invoice['customer_name']?></td>
 															<td>&#8358; <?=number_format($invoice['invoice_total'], 2, '.', ',')?></td>
-															<td><a href="#">Edit</a> | <a href="#">Remove</a></td>
+															<td><a href="#"><i class="icon icon-edit"></i> Edit</a> | <a href="#"><i class="icon icon-trash"></i> Remove</a> | <a href="<?=base_url('stocks/return/').$invoice['invoice_txn_id']?>"><i class="icon icon-shopping-cart"></i> Stock Return</a></td>
 														</tr>
 														<?php endforeach; ?>
 													</tbody>

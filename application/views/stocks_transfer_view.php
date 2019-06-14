@@ -26,12 +26,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="widget-content">
 					<?=validation_errors()?>
 					<form class="form-horizontal" method="post" action="<?=base_url('stocks/transfer')?>">
-						<div class="control-group">
+						<!--<div class="control-group">
 							<label class="control-label"> Date : </label>
 							<div class="controls">
 								<input type="text" required name="transfer_date" class="datepicker" data-date-format="dd-mm-yyyy" />
 							</div>
-						</dv>
+						</div>-->
 						<div class="control-group">
 							<label class="control-label">From :</label>
 							<div class="controls">
@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>
 						</div>
 						<div class="control-group">
-							<label class="control-label">Product :</label>
+							<label class="control-label">Product(s) :</label>
 							<div class="controls">
 								<table id="st_table" class="table">
 									<thead>
@@ -86,6 +86,98 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 
 					</form>
+				</div>
+			</div>
+			
+			<div class="widget-box">
+				<div class="widget-title">
+					<span class="icon"><i class="icon-th"></i></span>
+					<h5>Stock Transfers</h5>
+				</div>
+				<div class="widget-content">
+					<table class="table table-bordered data-table">
+						<thead>
+							<tr>
+								<th>Transfer Date</th>
+								<th>Transferred From</th>
+								<th>Transferred To</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php $is_first = true; $prev = null;
+							foreach($stock_transfers as $st): 
+								if($is_first == true || 
+									$st['stock_transfer_date']!=$prev['stock_transfer_date'] ):
+									
+									if($is_first == true):
+							?>
+										<tr>
+											<td><?=$st['stock_transfer_date']?></td>
+											<td><?=$st['warehouse_from']?></td>
+											<td><?=$st['warehouse_to']?></td>
+											<td>
+												<a href="#myModal<?=$st['stock_transfer_id']?>" data-toggle="modal" class="btn btn-info">
+													<i class="icon icon-list-alt"></i> Details</a>
+
+												<div id="myModal<?=$st['stock_transfer_id']?>" class="modal hide">
+													<div class="modal-header">
+														<button data-dismiss="modal" class="close" type="button">×</button>
+														<h3>Stock Transfered on <?=$st['stock_transfer_date']?></h3>
+													</div>
+													<div class="modal-body">
+														<table class="table table-bordered">
+															<thead>
+																<tr><th>Product Name</th><th>Product Quantity</th></tr>
+															</thead>
+															<tbody>
+																<tr><td><?=$st['product_name']?></td><td><?=$st['stock_transfer_quantity']?></td></tr>
+													
+							<?php 	else: ?>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td><?=$st['stock_transfer_date']?></td>
+											<td><?=$st['warehouse_from']?></td>
+											<td><?=$st['warehouse_to']?></td>
+											<td>
+												<a href="#myModal<?=$st['stock_transfer_id']?>" data-toggle="modal" class="btn btn-info">
+													<i class="icon icon-list-alt"></i> Details</a>
+
+												<div id="myModal<?=$st['stock_transfer_id']?>" class="modal hide">
+													<div class="modal-header">
+														<button data-dismiss="modal" class="close" type="button">×</button>
+														<h3>Stock Transfered on <?=$st['stock_transfer_date']?></h3>
+													</div>
+													<div class="modal-body">
+														<table class="table table-bordered">
+															<thead>
+																<tr><th>Product Name</th><th>Product Quantity</th></tr>
+															</thead>
+															<tbody>
+																<tr><td><?=$st['product_name']?></td><td><?=$st['stock_transfer_quantity']?></td></tr>
+													
+							<?php	endif;
+								else:
+							?>
+																<tr><td><?=$st['product_name']?></td><td><?=$st['stock_transfer_quantity']?></td></tr>
+							<?php
+								endif; 
+								$prev = $st;
+								if($is_first == true){ $is_first=false; }
+							endforeach; ?>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</td>
+										</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			

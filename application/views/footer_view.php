@@ -164,6 +164,7 @@
 <?php endif; ?>
 
 <?php if($active=="stocks"): 
+		if(@$page != "return"):
 	$wh_json = json_encode($warehouses);
 ?>
 $(document).ready(function(){
@@ -232,7 +233,40 @@ $(document).ready(function(){
 	$("#from_warehouse").trigger('change');
 });
 
-<?php endif; ?>
+<?php elseif(@$page == "return"): ?>
+	$(document).ready(function(){
+		function init_rows(){
+			var $tblrows = $("#sr_table tbody tr");
+			$tblrows.each(function(index){
+				var $tblrow = $(this);
+				$tblrow.find('.ifr').on('change',function(){
+					var qty = parseFloat($tblrow.find("[name='quantity[]']").val());
+					var rate = parseFloat($tblrow.find("[name='rate[]']").val());
+					var fr = qty - $tblrow.find("[name='returned[]']").val();
+					$tblrow.find("[id='asold[]']").html(fr);
+					$tblrow.find("[id='itotal[]']").html((fr*rate).toFixed(2));
+					$tblrow.find("[name='total[]']").val((fr*rate).toFixed(2));
+					r_total();
+				});
+			});
+		}
+		init_rows();
+		
+		function r_total(){
+			var $tblrows = $("#sr_table tbody tr");
+			var gtotal = 0.00;
+			$tblrows.each(function(index){
+				var $tblrow = $(this);
+				var amt = parseFloat($tblrow.find("[name='total[]']").val());
+				gtotal = (parseFloat(amt)+parseFloat(gtotal)).toFixed(2);
+			});
+			$("#rtotal").html(''+gtotal.toLocaleString());
+			$("#return_total").val(gtotal);
+		}
+	});
+		
+<?php 	endif;
+	endif; ?>
 
 <?php if($active=="supplies"): ?>
 $(document).ready(function(){

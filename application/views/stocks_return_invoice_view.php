@@ -7,9 +7,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<i class="icon-home"></i> Dashboard</a>
 		<a href="" class="<?=base_url('stock')?>"> Stocks</a>
 		<a href="" class="<?=base_url('stock/returns')?>"> Stocks Returns</a>
-		<a href="" class="current"> Stocks Return</a>
+		<a href="" class="current"> Stocks Return Invoice</a>
 	</div>
-	<h1>Stocks Returned</h1>
+	<h1>Stocks Returned Invoice</h1>
   </div>
 <!--End-breadcrumbs-->
 
@@ -47,11 +47,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</tr>
 								</tbody>
 							</table><br/>
-							<div class="control-group">
-								<label class="control-label">Return Date: </label>
-								<div class="controls">
-									<input type="text" class="datepicker span7" data-date-format="dd-mm-yyyy" name="return_date" />
-								</div>
+							<div class="">
+								<span>Return Date : <strong><?=$return_invoice['stock_return_date']?></strong></span>
 							</div>
 						</div>
 						<div class="span6">
@@ -60,21 +57,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<tr>
 										<tr>
 											<td class="width30">Invoice ID:</td>
-											<td class="width70"><strong><?=$invoice['invoice_txn_id']?></strong></td>
+											<td class="width70"><strong><?=$return_invoice['invoice_txn_id']?></strong></td>
 										</tr>
 										<tr>
 											<td>Issue Date:</td>
-											<td><strong><?=$invoice['invoice_issue_date']?></strong></td>
+											<td><strong><?=$return_invoice['invoice_issue_date']?></strong></td>
 										</tr>
 										<tr>
 											<td>Due Date:</td>
-											<td><strong><?=$invoice['invoice_due_date']?></strong></td>
+											<td><strong><?=$return_invoice['invoice_due_date']?></strong></td>
 										</tr>
 										<td class="width30">Client Address:</td>
-											<td class="width70"><i class="icon icon-list-alt"></i> <strong><?=$invoice['customer_name']?></strong> <br>
-											<i class="icon icon-home"></i> <?=$invoice['customer_address']?> <br/>
-											<i class="icon icon-phone"></i> <?=$invoice['customer_phone']?> <br/>
-											<i class="icon icon-envelope"></i> <?=$invoice['customer_email']?> <br/>
+											<td class="width70"><i class="icon icon-list-alt"></i> <strong><?=$return_invoice['customer_name']?></strong> <br>
+											<i class="icon icon-home"></i> <?=$return_invoice['customer_address']?> <br/>
+											<i class="icon icon-phone"></i> <?=$return_invoice['customer_phone']?> <br/>
+											<i class="icon icon-envelope"></i> <?=$return_invoice['customer_email']?> <br/>
 										</td>
 									</tr>
 								</tbody>
@@ -95,14 +92,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</tr>
 								</thead>
 							<tbody>
-								<?php foreach($invoice_items as $ii): ?>
+								<?php foreach($return_invoice_items as $ii): ?>
 								<tr>
-									<td><?=$ii['product_name']?><input type="text" name="item[]" value="<?=$ii['invoice_item_product']?>" /></td>
-									<td><?=$ii['invoice_item_quantity']?><input type="hidden" name="quantity[]" value="<?=$ii['invoice_item_quantity']?>"/></td>
-									<td class="right"><input type="number" min="0" max="<?=$ii['invoice_item_quantity']?>" class="span6 ifr" name="returned[]" value="0" /></td>
-									<td class="right"><span id="asold[]"><?=$ii['invoice_item_quantity']?></span></td>
-									<td class="right">&#8358; <?=$ii['invoice_item_price']?><input type="hidden" name="rate[]" value="<?=$ii['invoice_item_price']?>" /></td>
-									<td class="right"><strong>&#8358; <span id="itotal[]"><?=$ii['invoice_item_total']?></span><input type="hidden" name="total[]" value="<?=$ii['invoice_item_total']?>" /></strong></td>
+									<td><?=$ii['product_name']?></td>
+									<td><?=$ii['stock_return_item_supplied']?></td>
+									<td><?=$ii['stock_return_item_returned']?></td>
+									<td><?=($ii['stock_return_item_supplied']-$ii['stock_return_item_returned'])?></td>
+									<td><?=$ii['stock_return_item_rate']?></td>
+									<td><?=$ii['stock_return_item_amount']?></td>
 								</tr>
 								<?php endforeach; ?>
 							</tbody>
@@ -111,24 +108,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<tbody>
 								<tr>
 									<td class="msg-invoice" width="70%"><h4>Payment Terms: </h4>
-										<?=($invoice['invoice_payterms']==1)?'Payment on Delivery':'Payment on return'?>
+										<?=($return_invoice['invoice_payterms']==1)?'Payment on Delivery':'Payment on return'?>
 									</td>
 									<td class="right" width="12%"><strong>Subtotal</strong> <br>
 										<strong>Tax </strong> <br>
 										<strong>Discount</strong>
 									</td>
-									<td class="right" width="18%"><strong>&#8358; <?=$invoice['invoice_subtotal']?> <br>
-										&#8358; <?=$invoice['invoice_tax']?> <br>
-										&#8358; <?=$invoice['invoice_discount']?></strong>
+									<td class="right" width="18%"><strong>&#8358; <?=$return_invoice['invoice_subtotal']?> <br>
+										&#8358; <?=$return_invoice['invoice_tax']?> <br>
+										&#8358; <?=$return_invoice['invoice_discount']?></strong>
 									</td>
 								</tr>
 							</tbody>
 						</table>-->
 						<div class="pull-right">
-							<h4><span>Grand Total:</span> &#8358; <span id="rtotal"><?=$invoice['invoice_total']?></span></h4>
+							<h4><span>Grand Total:</span> &#8358; <span id="rtotal"><?=$return_invoice['stock_return_sold']?></span></h4>
 							<input type="hidden" id="return_total" name="return_amount" />
 							<br>
-							<button type="submit" class="btn btn-primary btn-large pull-right" href="">Return</button> </div>
+							<!--<button type="submit" class="btn btn-primary btn-large pull-right" href="">Return</button> </div>-->
 						</div>
 					</div>
 				</div>

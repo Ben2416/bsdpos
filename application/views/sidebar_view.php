@@ -3,11 +3,11 @@
   <ul>
     <li class="<?=($active=='dashboard'?'active':'')?>"><a href="<?=base_url('dashboard')?>"><i class="icon icon-dashboard"></i> <span>Dashboard</span></a> </li>
     <li class="<?=($active=='sales'?'active':'')?>"> <a href="<?=base_url('sales/index')?>"><i class="icon icon-barcode"></i> <span>Sales</span></a> </li>
-    <li class="submenu <?=($active=='stocks'?'active':'')?>"> <a href="#"><i class="icon icon-qrcode"></i> <span>Stocks</span> <span class="label label-important">3</span></a> 
+    <li class="submenu <?=($active=='stocks'?'active':'')?>"> <a href="#"><i class="icon icon-truck"></i> <span>Stocks</span> <span class="label label-important">3</span></a> 
 		<ul>
 			<li><a href="<?=base_url('stocks/index')?>"><span>Stocks</span></a></li>
 			<li><a href="<?=base_url('stocks/transfer')?>"><span>Stocks Transfer</span></a></li>
-			<li><a href="<?=base_url('stocks/return')?>"><span>Stocks Return</span></a></li>
+			<li><a href="<?=base_url('stocks/returns')?>"><span>Stocks Returns</span></a></li>
 		</ul>
 	</li>
     <li class="<?=($active=='warehouse'?'active':'')?>"><a href="<?=base_url('warehouse/index')?>"><i class="icon icon-home"></i> <span>Warehouses</span></a></li>
