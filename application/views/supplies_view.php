@@ -28,7 +28,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<ul class="nav nav-tabs">
 								<!--<li class="active"><a data-toggle="tab" href="#tab1">Tab1</a></li>-->
 								<?php for($i=0; $i<count($warehouses); $i++): // foreach($warehouses as $wh): ?>
-								<li class="<?=($i==0)?'active':''?>"><a data-toggle="tab" href="#tab<?=$i?>"><?=$warehouses[$i]['warehouse_name']?></a></li>
+								<li class="<?=($i==0)?'active':''?>">
+									<a data-toggle="tab" href="#tab<?=$i?>"><?=$warehouses[$i]['warehouse_name']?></a></li>
 								<?php endfor;//endforeach; ?>
 								<?php if(count($warehouses)>0):?>
 								<li><a data-toggle="tab" href="#tab<?=count($warehouses)?>">Summation</a></li>
@@ -71,10 +72,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													<td><?=$supply['supply_date']?></td>
 													<td><?=$supply['supply_batch_id']?></td>
 													<td>
-														<a href="#supplyModel<?=$supply['supply_batch_id'].$i?>" data-toggle="Modal" class="">
+														<a href="#supplyModal<?=$supply['supply_batch_id'].$i?>" data-toggle="modal" class="">
 															<i class="icon icon-list-alt"></i> Supply Details</a></a>
 
-														<div id="supplyModal<?=$supply['supply_batch_id'].$i?>" class="modal ">
+														<div id="supplyModal<?=$supply['supply_batch_id'].$i?>" class="modal hide">
 															<div class="modal-header">
 																<button data-dismiss="modal" class="close" type="button">×</button>
 																<h3>Batch <?=$supply['supply_batch_id']?>: Stock Transfered on <?=$supply['supply_date']?></h3>
@@ -93,7 +94,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																	</thead>
 																	<tbody>
 																		<tr>
-																			<td><?=$supply['supply_date'].$supply['supply_batch_id']?></td>
+																			<td><?=$supply['supply_date']?></td>
 																			<td><?=$supply['product_name']?></td>
 																			<td><?=$supply['supply_quantity']?></td>
 																			<td>&#8358; <?=$supply['supply_rate']?></td>
@@ -110,7 +111,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													<td><?=$supply['supply_date']?></td>
 													<td><?=$supply['supply_batch_id']?></td>
 													<td>
-														<a href="#supplyModel<?=$supply['supply_batch_id'].$i?>" data-toggle="Modal" class="">
+														<a href="#supplyModal<?=$supply['supply_batch_id'].$i?>" data-toggle="modal" class="">
 															<i class="icon icon-list-alt"></i> Supply Details</a></a>
 
 														<div id="supplyModal<?=$supply['supply_batch_id'].$i?>" class="modal hide">
@@ -132,7 +133,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																	</thead>
 																	<tbody>
 																		<tr>
-																			<td><?=$supply['supply_date'].$supply['supply_batch_id']?></td>
+																			<td><?=$supply['supply_date']?></td>
 																			<td><?=$supply['product_name']?></td>
 																			<td><?=$supply['supply_quantity']?></td>
 																			<td>&#8358; <?=$supply['supply_rate']?></td>
@@ -142,7 +143,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													else:
 											?>
 																		<tr>
-																			<td><?=$supply['supply_date'].$supply['supply_batch_id']?></td>
+																			<td><?=$supply['supply_date']?></td>
 																			<td><?=$supply['product_name']?></td>
 																			<td><?=$supply['supply_quantity']?></td>
 																			<td>&#8358; <?=$supply['supply_rate']?></td>
@@ -167,7 +168,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php endfor;?>
 							<!--	FOR SUMMARY -->
 							<?php if(count($warehouses)>0):?>
-								<div id="tab<?=count($warehouses)?>" class="tab-pane">
+							<div id="tab<?=count($warehouses)?>" class="tab-pane">
 								<p> Summation</p>
 								<div class="widget-box">
 									<div class="widget-title">
