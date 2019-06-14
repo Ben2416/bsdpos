@@ -11,9 +11,22 @@ class Supplies_model extends CI_Model{
 	}
 	
 	public function getSupplies(){
+		$this->db->order_by('supply_batch_id', 'DESC');
 		$this->db->join('products', $this->table.'.supply_item=products.product_id');
 		$query = $this->db->get($this->table);
 		return $query->result_array();
+	}
+	
+	public function getLastSupplyBatch(){
+		$this->db->select('supply_batch_id');
+		$this->db->from($this->table);
+		$this->db->order_by('supply_id', 'DESC');
+		$this->db->limit(1);
+		$query = $this->db->get();
+		if($query->num_rows() > 0)
+			return $query->row()->supply_batch_id;
+		else
+			return 1000000;
 	}
 	
 	public function addSupplies($supplies, $stock_update){
