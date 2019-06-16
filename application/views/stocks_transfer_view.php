@@ -128,10 +128,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													<div class="modal-body">
 														<table class="table table-bordered">
 															<thead>
-																<tr><th>Product Name</th><th>Product Quantity</th></tr>
+																<tr><th>Product Name</th><th>Product Quantity</th><th>Product Price</th></tr>
 															</thead>
 															<tbody>
-																<tr><td><?=$st['product_name']?></td><td><?=$st['stock_transfer_quantity']?></td></tr>
+																<tr><td><?=$st['product_name']?></td><td><?=$st['stock_transfer_quantity']?></td><td>&#8358; <?=number_format(($st['product_supply_price']*$st['stock_transfer_quantity']), 2, '.', ',')?></td></tr>
 													
 							<?php 	else: ?>
 															</tbody>
@@ -156,26 +156,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													<div class="modal-body">
 														<table class="table table-bordered">
 															<thead>
-																<tr><th>Product Name</th><th>Product Quantity</th></tr>
+																<tr><th>Product Name</th><th>Product Quantity</th><th>Product Price</th></tr>
 															</thead>
 															<tbody>
-																<tr><td><?=$st['product_name']?></td><td><?=$st['stock_transfer_quantity']?></td></tr>
+																<tr><td><?=$st['product_name']?></td><td><?=$st['stock_transfer_quantity']?></td><td>&#8358; <?=number_format(($st['product_supply_price']*$st['stock_transfer_quantity']), 2, '.', ',')?></td></tr>
 													
 							<?php	endif;
 								else:
 							?>
-																<tr><td><?=$st['product_name']?></td><td><?=$st['stock_transfer_quantity']?></td></tr>
+																<tr><td><?=$st['product_name']?></td><td><?=$st['stock_transfer_quantity']?></td><td>&#8358; <?=number_format(($st['product_supply_price']*$st['stock_transfer_quantity']), 2, '.', ',')?></td></tr>
 							<?php
 								endif; 
 								$prev = $st;
 								if($is_first == true){ $is_first=false; }
 							endforeach; ?>
+										<?php if(count($stock_transfers)	 > 0): ?>
 															</tbody>
 														</table>
 													</div>
 												</div>
 											</td>
 										</tr>
+										<?php endif; ?>
 						</tbody>
 					</table>
 				</div>

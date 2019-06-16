@@ -49,6 +49,7 @@ class Stocks extends CI_Controller {
 					//'stock_date' => $this->input->post('transfer_date', true),
 					'stock_product' => $this->input->post('product[]', true)[$i],
 					'stock_quantity' => $this->input->post('product_quantity[]', true)[$i],
+					'stock_price' => $this->input->post('price[]', true)[$i],
 					'from_warehouse' => $this->input->post('from_warehouse', true),
 					'to_warehouse' => $this->input->post('to_warehouse', true),
 				);

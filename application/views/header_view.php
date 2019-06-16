@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <!--Header-part-->
 <div id="header">
-  <h1><a href="<?base_url('dashboard')?>">Matrix Admin</a></h1>
+  <h1><a href="<?base_url('dashboard')?>">Eddinho</a></h1>
 </div>
 <!--close-Header-part--> 
 

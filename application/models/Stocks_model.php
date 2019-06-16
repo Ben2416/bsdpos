@@ -30,6 +30,7 @@ class Stocks_model extends CI_Model{
 				'stock_transfer_date' => date('d-m-Y'),//$st['stock_date'],
 				'stock_transfer_product' => $st['stock_product'],
 				'stock_transfer_quantity' => $st['stock_quantity'],
+				'stock_transfer_price' => $st['stock_price'],
 				'stock_transfer_from' => $st['from_warehouse'],
 				'stock_transfer_to' => $st['to_warehouse']
 			);
@@ -112,7 +113,7 @@ class Stocks_model extends CI_Model{
 	}
 	
 	public function getStockTransfers(){
-		$this->db->select('stock_transfers.*, products.product_name, w1.warehouse_name as warehouse_from, w2.warehouse_name as warehouse_to');
+		$this->db->select('stock_transfers.*, products.product_name, products.product_supply_price, w1.warehouse_name as warehouse_from, w2.warehouse_name as warehouse_to');
 		$this->db->join('warehouses as w1', 'stock_transfers.stock_transfer_from=w1.warehouse_id');
 		$this->db->join('warehouses as w2', 'stock_transfers.stock_transfer_to=w2.warehouse_id');
 		$this->db->join('products', 'stock_transfers.stock_transfer_product=products.product_id');

@@ -64,6 +64,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											<table class="table table-bordered">
 												<thead>
 													<tr>
+														<th>Date</th>
 														<th>Expense Item</th>
 														<th>Amount</th>
 													</tr>
@@ -76,6 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 														continue;
 													?>
 													<tr>
+														<td><?=$expense['expense_date']?></td>
 														<td><?=$expense['expense_item']?></td>
 														<td>&#8358; <?=number_format($expense['expense_amount'], '2','.',',')?></td>
 													</tr>

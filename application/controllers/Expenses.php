@@ -22,13 +22,19 @@ class Expenses extends CI_Controller {
 	
 	public function add(){
 		$data['active'] = 'expenses';
+		$data['sub_page'] = "add";
 		$data['warehouses'] = $this->expenses->getWarehouses();
+		$data['admin_expenses'] = json_encode($this->expenses->getExpenseItems('Admin'));
+		$data['fc_expenses'] = json_encode($this->expenses->getExpenseItems('Finance Cost'));
+		$data['sd_expenses'] = json_encode($this->expenses->getExpenseItems('Sales and Distribution'));
 		
 		$this->form_validation->set_error_delimiters('<div class="alert alert-error"><button class="close" data-dismiss="alert">×</button>','</div>');
 		$this->form_validation->set_rules('expense_date', 'Expense Date', 'trim|required');
 		$this->form_validation->set_rules('expense_warehouse', 'Expense Warehouse', 'trim|required');
 		$this->form_validation->set_rules('expense_class', 'Expense Class', 'trim|required');
 		$this->form_validation->set_rules('expense_item', 'Expense Item', 'trim|required');
+		if(array_key_exists('new_expense_item', $this->input->post()))
+			$this->form_validation->set_rules('new_expense_item', 'New Expense Item', 'trim|required');
 		$this->form_validation->set_rules('expense_amount', 'Expense Amount', 'trim|required');
 		
 		if($this->form_validation->run() == FALSE){

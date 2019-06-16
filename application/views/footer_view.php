@@ -37,6 +37,53 @@
 
 <script>
 
+<?php if($active == "expenses"): ?>
+	$(document).ready(function(){
+	<?php if(@$sub_page == "add"): ?>
+		var admin_expenses = <?=$admin_expenses?>;
+		var fc_expenses = <?=$fc_expenses?>;
+		var sd_expenses = <?=$sd_expenses?>;
+		function expense_class(){
+			$('#expense_item').empty();
+			if($('#expense_class').val() == "Admin"){
+				$.each(admin_expenses, function(a, b){
+					$('#expense_item').append('<option>'+b.expense_item+'</option>');
+				});
+			}else if($('#expense_class').val() == "Finance Cost"){
+				$.each(fc_expenses, function(a, b){
+					$('#expense_item').append('<option>'+b.expense_item+'</option>');
+				});
+			}else{
+				$.each(sd_expenses, function(a, b){
+					$('#expense_item').append('<option>'+b.expense_item+'</option>');
+				});
+			}
+			$('#expense_item').append('<option>Other</option>');
+			$('#expense_item').trigger('change');
+			//$('#expense_item').val( $('#expense_item option:first').val() );
+			//$('#expense_item option:first').attr('selected', 'selected');
+			//$('#expense_item option:first').prop('selected', true);
+		}
+		
+		expense_class();
+		
+		$('#expense_class').on('change', function(){
+			expense_class();
+		});
+	
+		$('#expense_item').on('change', function(){
+			if($('#expense_item').val() == "Other"){
+				$('#new_expense_div').show();
+				$('#new_expense_item').attr('disabled', false);
+			}else{
+				$('#new_expense_div').hide();
+				$('#new_expense_item').attr('disabled', true);
+			}
+		});
+	<?php endif; ?>
+	});
+<?php endif; ?>
+
 <?php if($active=="invoice"): ?>
 	$(document).ready(function(){
 		
@@ -173,7 +220,7 @@ $(document).ready(function(){
 		$("#st_table tbody").append('<tr>'
 			+'<td><input name="product_name[]" class="span12"><input type="hidden" name="product[]" /></td>'
 			+'<td><input type="number" min="1" class="" name="product_quantity[]" placeholder="product quantity" /></td>'
-			+'<td><span class="span12" id="products_available[]">0</span></td>'
+			+'<td><span class="span12" id="products_available[]">0</span><input type="hidden" name="price[]" /></td>'
 			+'<td><a class="btn btn-danger" onclick="$(this).closest(\'tr\').remove();"><i class="icon icon-trash"></i></a></td>'
 		+'</tr>');
 		prep_rows();
@@ -198,7 +245,8 @@ $(document).ready(function(){
 								return {
 									label: el.product_name,
 									value: el.product_id,
-									quantity: el.stock_quantity
+									quantity: el.stock_quantity,
+									price: el.product_supply_price
 								};
 							}));
 						},
@@ -213,6 +261,7 @@ $(document).ready(function(){
 					$tblrow.find("[name='product[]']").val(el.item.value);
 					$tblrow.find("[name='product_quantity[]']").attr('max', el.item.quantity);
 					$tblrow.find("[id='products_available[]']").html(el.item.quantity);
+					$tblrow.find("[name='price[]']").val(el.item.price);
 					//$('.qty').trigger('change');
 				},
 				minLength: 1

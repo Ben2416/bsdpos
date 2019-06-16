@@ -41,9 +41,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<td><?=$product['warehouse_name']?></td>
 								<td><?=$product['product_name']?></td>
 								<td><?=$product['product_description']?></td>
-								<td><?=$product['product_wholesale_price']?></td>
-								<td><?=$product['product_supply_price']?></td>
-								<td><?=$product['product_retail_price']?></td>
+								<td>&#8358; <?=$product['product_wholesale_price']?></td>
+								<td>&#8358; <?=$product['product_supply_price']?></td>
+								<td>&#8358; <?=$product['product_retail_price']?></td>
 								<td>
 									<a href="<?=base_url('products/edit/'.$product['product_id'])?>"><i class="icon icon-edit"></i> Edit</a> | 
 									<a href="#deleteProduct<?=$product['product_id']?>" data-toggle="modal"><i class="icon icon-trash"></i> Remove</a>

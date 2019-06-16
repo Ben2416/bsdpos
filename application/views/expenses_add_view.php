@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="control-group">
 							<label class="control-label">Class : </label>
 							<div class="controls">
-								<select name="expense_class">
+								<select name="expense_class" id="expense_class">
 									<option>Admin</option>
 									<option>Sales and Distribution</option>
 									<option>Finance Cost</option>
@@ -59,11 +59,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="control-group">
 							<label class="control-label">Item : </label>
 							<div class="controls">
-								<select name="expense_item">
+								<select name="expense_item" id="expense_item">
 									<option>Electricity</option>
 									<option>Transportation</option>
 									<option>Fuelling</option>
+									<option>Other</option>
 								</select>
+							</div>
+						</div>
+						
+						<div id="new_expense_div" class="control-group hide">
+							<label class="control-label">Add New Item : </label>
+							<div class="controls">
+								<input type="text" name="new_expense_item" id="new_expense_item" disabled="disabled" required />
 							</div>
 						</div>
 						

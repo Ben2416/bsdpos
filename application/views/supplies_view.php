@@ -37,7 +37,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</ul>
 						</div>
 						<div class="widget-content tab-content">
-							<?php for($i=0; $i<count($warehouses); $i++): ?>
+							<?php for($i=0; $i<count($warehouses); $i++): 
+								$no_of_supplies_per_warehouse = array();?>
 							<div id="tab<?=$i?>" class="tab-pane <?=($i==0)?'active':''?>">
 								<!--<p> <?=$warehouses[$i]['warehouse_name']?></p>-->
 								
@@ -55,12 +56,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											<thead>
 												<tr>
 													<th>Date</th>
-													<th>Batch</th>
+													<th>Transaction ID</th>
 													<th></th>
 												</tr>
 											</thead>
 											<tbody>
 											<?php $is_first = true; $prev = null; 
+												$no_of_supplies_per_warehouse[$i] = 0;
 												foreach($supplies as $supply): 
 													if($supply['supply_warehouse'] != $warehouses[$i]['warehouse_id'])
 														continue;
@@ -153,11 +155,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													endif;
 													$prev = $supply;
 													if($is_first == true){ $is_first=false; }
+													$no_of_supplies_per_warehouse[$i] += 1;
 												endforeach; ?>
+													<?php if(@$no_of_supplies_per_warehouse[$i]>0): ?>
 																	</tbody>
 																</table>
 															</div>
 														</div>
+													<?php endif; ?>
 													</td>
 												</tr>
 											</tbody>
