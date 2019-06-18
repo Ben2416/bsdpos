@@ -5,9 +5,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div id="breadcrumb"> 
 		<a href="<?=base_url('dashboard')?>" title="Go to Users" class="tip-bottom">
 			<i class="icon-home"></i> Dashboard</a>
-		<a href="" class="current"> Invoices</a>
+		<a href="" class="current"> <?=($invoice_type=='CREDIT')?'Invoices':'Receipts'?></a>
 	</div>
-	<h1>Invoices</h1>
+	<h1><?=($invoice_type=='CREDIT')?'Invoice':'Receipt'?></h1>
   </div>
 <!--End-breadcrumbs-->
 
@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			<div class="widget-box">
 				<div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
-					<h5>EDDINHO INTERNATIONAL</h5>
+					<h5><?=($invoice_type=='CREDIT')?'Invoice':'Receipt'?></h5>
 				</div>
 				<div class="widget-content">
 					<div class="row-fluid">
@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<tbody>
 									<tr>
 										<tr>
-											<td class="width30">Invoice ID:</td>
+											<td class="width30"><?=($invoice_type=='CREDIT')?'Invoice':'Receipt'?> ID:</td>
 											<td class="width70"><strong><?=$invoice['invoice_txn_id']?></strong></td>
 										</tr>
 										<tr>
@@ -98,8 +98,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<table class="table table-bordered table-invoice-full">
 							<tbody>
 								<tr>
-									<td class="msg-invoice" width="70%"><h4>Payment Terms: </h4>
+									<td class="msg-invoice" width="70%">
+										<?php if($invoice=='CREDIT'): ?>
+										<h4>Payment Terms: </h4>
 										<?=($invoice['invoice_payterms']==1)?'Payment on Delivery':'Payment on return'?>
+										<?php endif; ?>
 									</td>
 									<td class="right" width="12%"><strong>Subtotal</strong> <br>
 										<strong>Tax </strong> <br>

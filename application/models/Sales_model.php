@@ -10,9 +10,10 @@ class Sales_model extends CI_Model{
 		return $query->result_array();
 	}
 	
-	public function getInvoices(){
+	public function getInvoices($sales_type){
 		$this->db->join('customers', 'invoices.invoice_client=customers.customer_id');
 		$this->db->join('warehouses', 'invoices.invoice_warehouse=warehouses.warehouse_id');
+		$this->db->where('invoices.invoice_type', $sales_type);
 		$this->db->order_by('invoice_id', 'DESC');
 		$query = $this->db->get('invoices');
 		return $query->result_array();

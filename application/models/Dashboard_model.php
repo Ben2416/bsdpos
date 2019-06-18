@@ -14,7 +14,7 @@ class Dashboard_model extends CI_Model{
 	public function getStocks(){
 		$this->db->join('products', 'stocks.stock_product=products.product_id');
 		$this->db->order_by('stock_id', 'DESC');
-		$this->db->limit(10);
+		//$this->db->limit(10);
 		$query = $this->db->get('stocks');
 		return $query->result_array();
 	}
@@ -63,6 +63,20 @@ class Dashboard_model extends CI_Model{
 		$query = $this->db->get();//echo $this->db->last_query();
 		//print_r($query->row());exit;
 		return $query->row()->credit_sales_week;
+	}
+	
+	public function getExpensesToday($date){
+		$this->db->select('SUM(expense_amount) as expenses_today');
+		$this->db->where('expense_date', $date);
+		$query = $this->db->get('expenses');
+		return $query->row()->expenses_today;
+	}
+	
+	public function getExpensesWeek($from, $to){
+		$this->db->select('SUM(expense_amount) as expenses_week');
+		$this->db->where("STR_TO_DATE(expense_date,'%d-%m-%Y') BETWEEN STR_TO_DATE('".$from."', '%d-%m-%Y') AND STR_TO_DATE('".$to."', '%d-%m-%Y')", "", FALSE);
+		$query = $this->db->get('expenses');
+		return $query->row()->expenses_week;
 	}
 	
 }

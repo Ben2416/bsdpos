@@ -17,6 +17,10 @@ class Dashboard extends CI_Controller {
 		$data['invoices_month'] = $this->dashboard->getInvoicesMonth(date('m-Y'));
 		$data['sales_today'] = $this->dashboard->getSalesToday(date('d-m-Y'));
 		$data['sales_month'] = $this->dashboard->getSalesMonth(date('m-Y'));
+		$data['expenses_today'] = $this->dashboard->getExpensesToday(date('d-m-Y'));		
+		
+		
+		$data['expenses_week'] = $this->dashboard->getExpensesWeek( date('d-m-Y', strtotime('-17 days')), date('d-m-Y') );
 		
 		//date('Y-m-d', strtotime('-7 days'))
 		$data['pos_sales_week'] = $this->dashboard->getPosSalesWeek( date('d-m-Y', strtotime('-17 days')), date('d-m-Y') );

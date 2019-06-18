@@ -5,9 +5,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div id="breadcrumb"> 
 		<a href="<?=base_url('dashboard')?>" title="Go to Users" class="tip-bottom">
 			<i class="icon-home"></i> Dashboard</a>
-		<a href="" class="current"> Invoices</a>
+		<a href="" class="current"> <?=($invoice_type=='CREDIT')?'Invoices':'Receipts'?></a>
 	</div>
-	<h1>Invoices</h1>
+	<h1><?=($invoice_type=='CREDIT')?'Invoices':'Receipts'?></h1>
   </div>
 <!--End-breadcrumbs-->
 
@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			
 			<div class="widget-box">
 				<div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
-					<h5>EDDINHO INTERNATIONAL</h5>
+					<h5><?=($invoice_type=='CREDIT')?'Invoice':'Receipt'?></h5>
 				</div>
 				<div class="widget-content">
 					<div class="row-fluid">
@@ -67,7 +67,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<table class="table table-bordered table-invoice">
 								<tbody>
 									<tr>
-										<td class="width30">Invoice ID:</td>
+										<td class="width30"><?=($invoice_type=='CREDIT')?'Invoice':'Receipt'?> ID:</td>
 										<td class="width70"><strong><input type="text" name="invoice_id" placeholder="invoice_id" value="<?=$last_invoice+1?>" disabled /></strong></td>
 									</tr>
 									<tr>
@@ -129,11 +129,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<tbody>
 								<tr>
 									<td class="msg-invoice" width="70%">
+										<?php if($invoice_type == "CREDIT"): ?>
 										<h4>Payment Terms: </h4>
 												<select name="invoice_payment_term">
 													<option value="1" <?=set_select('myselect', '1'); ?>>Payment on Delivery</option>
 													<option value="2" <?=set_select('myselect', '2'); ?>>Payment on return</option>
 												</select>
+										<?php endif; ?>
 									</td>
 									<td class="right" width="13%"><strong>Subtotal</strong> <br>
 										<strong>Discount</strong> <br>
@@ -149,7 +151,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="pull-right">
 							<h4><span>Grand Total:</span> &#8358; <span id="gtotal">0.00</span></h4>
 							<br>
-							<button type="submit" class="btn btn-primary btn-large pull-right">Generate Invoice</button> </div>
+							<button type="submit" class="btn btn-primary btn-large pull-right">Generate <?=($invoice_type=='CREDIT')?'Invoice':'Receipt'?></button> </div>
 						</div>
 					</div>
 				</div>

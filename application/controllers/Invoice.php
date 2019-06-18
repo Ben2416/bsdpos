@@ -21,8 +21,9 @@ class Invoice extends CI_Controller {
 	}
 	
 	//get an invoice
-	public function get($invoice_id){
+	public function get($invoice_id, $invoice_type){
 		$data['active'] = 'invoice';
+		$data['invoice_type'] = $invoice_type;
 		
 		$data['invoice'] = $this->invoice->getInvoice($invoice_id)[0];
 		$data['invoice_items'] = $this->invoice->getInvoiceItems($invoice_id);
@@ -74,6 +75,7 @@ class Invoice extends CI_Controller {
 				'customer_address' => $this->input->post('invoice_customer_address', true)
 			);
 			
+			$payment_terms = ($invoice_type=='CREDIT')?$this->input->post('invoice_payment_term', true):'Cash';
 			$invoice = array(
 				'invoice_txn_id' => $invoice_id,
 				'invoice_category' => $invoice_category,
@@ -84,7 +86,7 @@ class Invoice extends CI_Controller {
 				'invoice_tax' => 0.00,
 				'invoice_discount' => $this->input->post('invoice_extra_discount', true),
 				'invoice_total' => $this->input->post('invoice_total', true),
-				'invoice_payterms' => $this->input->post('invoice_payment_term', true),
+				'invoice_payterms' => $payment_terms,
 				//'invoice_client' => 1001,//get from customer (customer insert id)
 				'invoice_warehouse' => $this->input->post('invoice_warehouse')
 			);
@@ -103,10 +105,10 @@ class Invoice extends CI_Controller {
 			$add_invoice = $this->invoice->addInvoice($customer, $invoice, $invoice_items);
 			if($add_invoice){
 				$this->session->set_flashdata('success', "Invoice was generated successfully.");
-				redirect(base_url('sales/index'), 'refresh');
+				redirect(base_url('sales/index/'.$invoice_type), 'refresh');
 			}else{
 				$this->session->set_flashdata('error', "Failed to generate invoice.");
-				redirect(base_url('sales/index'), 'refresh');
+				redirect(base_url('sales/index/'.$invoice_type), 'refresh');
 			}
 			
 		}

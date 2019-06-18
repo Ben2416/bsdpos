@@ -6,6 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<a href="<?=base_url('dashboard')?>" title="Go to Users" class="tip-bottom">
 			<i class="icon-home"></i> Dashboard</a>
 		<a href="" class="current"> Sales</a>
+		<a href="" class="current"> <?=($sales_type=='CREDIT')?'Invoices':'Receipts'?></a>
 	</div>
 	<h1>Sales</h1>
   </div>
@@ -41,9 +42,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<!--<p> <?=$warehouses[$i]['warehouse_name']?></p>-->
 								<div class="btn-icon-pg">
 								<ul class="">
-									<li><a href="<?=base_url('invoice/create/supply/CREDIT')?>" ><i class="icon icon-plus"></i> Add Supply Invoice</a></li>
-									<li><a href="<?=base_url('invoice/create/wholesale/CREDIT')?>" ><i class="icon icon-plus"></i> Add Wholesale Invoice</a></li>
-									<li><a href="<?=base_url('invoice/create/retail/CREDIT')?>" ><i class="icon icon-plus"></i> Add Retail Invoice</a></li>
+									<li><a href="<?=base_url('invoice/create/supply/')?><?=($sales_type=='CREDIT')?'CREDIT':'POS'?>" ><i class="icon icon-plus"></i> Add Supply <?=($sales_type=='CREDIT')?'Invoice':'Receipt'?></a></li>
+									<li><a href="<?=base_url('invoice/create/wholesale/')?><?=($sales_type=='CREDIT')?'CREDIT':'POS'?>" ><i class="icon icon-plus"></i> Add Wholesale <?=($sales_type=='CREDIT')?'Invoice':'Receipt'?></a></li>
+									<li><a href="<?=base_url('invoice/create/retail/')?><?=($sales_type=='CREDIT')?'CREDIT':'POS'?>" ><i class="icon icon-plus"></i> Add Retail <?=($sales_type=='CREDIT')?'Invoice':'Receipt'?></a></li>
 								</ul>
 								</div>
 								
@@ -57,7 +58,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												<input type="text" class="span3 m-wrap datepicker" data-date="<?=date('d-m-Y')?>" data-date-format="dd-mm-yyyy" placeholder="start date" />
 												<label class="span1 m-wrap">To</label>
 												<input type="text" class="span3 m-wrap datepicker" data-date="01-02-2013" data-date-format="dd-mm-yyyy" placeholder="enddate" />
-												<button class="btn btn-primary span3 m-wrap">Get Invoices</button>
+												<button class="btn btn-primary span3 m-wrap">Get <?=($sales_type=='CREDIT')?'Invoices':'Receipts'?></button>
 											</div>
 										</form>
 														
@@ -69,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												<table class="table table-bordered data-table">
 													<thead>
 														<tr>
-															<th>Invoice Number</th>
+															<th><?=($sales_type=='CREDIT')?'Invoice':'Receipt'?> Number</th>
 															<th>Category</th>
 															<th>Type</th>
 															<th>Customer Name</th>
@@ -83,12 +84,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																continue;
 														?>
 														<tr>
-															<td><a href="<?=base_url('invoice/get/').$invoice['invoice_txn_id']?>"><?=$invoice['invoice_txn_id']?></a></td>
+															<td><a href="<?=base_url('invoice/get/').$invoice['invoice_txn_id']?>/<?=$sales_type?>"><?=$invoice['invoice_txn_id']?></a></td>
 															<td><?=$invoice['invoice_category']?></td>
 															<td><?=$invoice['invoice_type']?></td>
 															<td><?=$invoice['customer_name']?></td>
 															<td>&#8358; <?=number_format($invoice['invoice_total'], 2, '.', ',')?></td>
-															<td><a href="#"><i class="icon icon-edit"></i> Edit</a> | <a href="#"><i class="icon icon-trash"></i> Remove</a> | <a href="<?=base_url('stocks/return/').$invoice['invoice_txn_id']?>"><i class="icon icon-shopping-cart"></i> Stock Return</a></td>
+															<td>
+																<a href="#"><i class="icon icon-edit"></i> Edit</a> 
+																| 
+																<a href="#"><i class="icon icon-trash"></i> Remove</a> 
+																<?php if($sales_type=='CREDIT'):?>
+																| 
+																<a href="<?=base_url('stocks/return/').$invoice['invoice_txn_id']?>"><i class="icon icon-shopping-cart"></i> Stock Return</a></td>
+																<?php endif;?>
 														</tr>
 														<?php endforeach; ?>
 													</tbody>
