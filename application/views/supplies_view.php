@@ -57,6 +57,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												<tr>
 													<th>Date</th>
 													<th>Transaction ID</th>
+													<th>Supplier</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -73,6 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												<tr>
 													<td><?=$supply['supply_date']?></td>
 													<td><?=$supply['supply_batch_id']?></td>
+													<td><?=$supply['supplier_name']?></td>
 													<td>
 														<a href="#supplyModal<?=$supply['supply_batch_id'].$i?>" data-toggle="modal" class="">
 															<i class="icon icon-list-alt"></i> Supply Details</a></a>
@@ -80,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 														<div id="supplyModal<?=$supply['supply_batch_id'].$i?>" class="modal hide">
 															<div class="modal-header">
 																<button data-dismiss="modal" class="close" type="button">×</button>
-																<h3>Batch <?=$supply['supply_batch_id']?>: Stock Transfered on <?=$supply['supply_date']?></h3>
+																<h3>Batch <?=$supply['supply_batch_id']?>: Stock Supplied on <?=$supply['supply_date']?></h3>
 															</div>
 															<div class="modal-body">
 																
@@ -112,6 +114,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												<tr>
 													<td><?=$supply['supply_date']?></td>
 													<td><?=$supply['supply_batch_id']?></td>
+													<td><?=$supply['supplier_name']?></td>
 													<td>
 														<a href="#supplyModal<?=$supply['supply_batch_id'].$i?>" data-toggle="modal" class="">
 															<i class="icon icon-list-alt"></i> Supply Details</a></a>
@@ -119,7 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 														<div id="supplyModal<?=$supply['supply_batch_id'].$i?>" class="modal hide">
 															<div class="modal-header">
 																<button data-dismiss="modal" class="close" type="button">×</button>
-																<h3>Batch <?=$supply['supply_batch_id']?>:: Stock Transfered on <?=$supply['supply_date']?></h3>
+																<h3>Batch <?=$supply['supply_batch_id']?>:: Stock Supplied on <?=$supply['supply_date']?></h3>
 															</div>
 															<div class="modal-body">
 																

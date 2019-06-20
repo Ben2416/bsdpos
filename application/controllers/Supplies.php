@@ -27,6 +27,10 @@ class Supplies extends CI_Controller {
 		
 		$this->form_validation->set_error_delimiters('<div class="alert alert-error"><button class="close" data-dismiss="alert">×</button>','</div>');
 		$this->form_validation->set_rules('supply_date', 'Supply Date', 'trim|required');
+		$this->form_validation->set_rules('supplier_name', 'Supplier Name', 'trim|required');
+		$this->form_validation->set_rules('supplier_phone', 'Supplier Phone', 'trim|required');
+		$this->form_validation->set_rules('supplier_email', 'Supplier Email', 'trim|required');
+		$this->form_validation->set_rules('supplier_address', 'Supplier Address', 'trim|required');
 		$this->form_validation->set_rules('supply_item[]', 'Supply Item', 'trim|required');
 		$this->form_validation->set_rules('supply_quantity[]', 'Supply Quantity', 'trim|required');
 		$this->form_validation->set_rules('supply_rate[]', 'Supply Rate', 'trim|required');
@@ -38,28 +42,7 @@ class Supplies extends CI_Controller {
 			$this->load->view('supplies_add_view');
 			$this->load->view('footer_view');
 		}else{
-			
-			$items = count($this->input->post("supply_item[]"));
-			$supply_items = array();
-			$stock_updates = array();
-			for($i=0; $i<$items; $i++){
-				$supply_items[] = array(
-					'supply_date' => $this->input->post('supply_date', true),
-					'supply_item' => $this->input->post('supply_item', true)[$i],
-					'supply_quantity' => $this->input->post('supply_quantity', true)[$i],
-					'supply_rate' => $this->input->post('supply_rate', true)[$i],
-					'supply_amount' => $this->input->post('supply_amount', true)[$i],
-					'supply_warehouse' => $warehouse_id
-				);
-				
-				$stock_updates[] = array(
-					'stock_product' => $this->input->post('supply_item', true)[$i],
-					'stock_quantity' => $this->input->post('supply_quantity')[$i],
-					'stock_warehouse' => $warehouse_id
-				);
-			}
-			
-			$add_supplies = $this->supplies->addSupplies($supply_items, $stock_updates);
+			$add_supplies = $this->supplies->addSupplies($warehouse_id);
 			if($add_supplies){
 				$this->session->set_flashdata('success', 'Supplies have been added successfully');
 				redirect(base_url('supplies'), 'refresh');

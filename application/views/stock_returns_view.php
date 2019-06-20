@@ -42,7 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</thead>
 								<tbody>
 									<?php foreach($stock_returns as $sr): ?>
-									<tr onclick="location.href='<?=base_url('stocks/returninvoice/'.$sr['stock_return_invoice'])?>'">
+									<tr onclick="location.href='<?=base_url('stocks/returninvoice/'.$sr['stock_return_invoice'])?>'" style="cursor:pointer;">
 										<td><?=$sr['stock_return_date']?></td>
 										<td><?=$sr['stock_return_invoice']?></td>
 										<td><?=$sr['customer_name']?></td>

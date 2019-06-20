@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											<thead>
 												<tr>
 													<th>Date</th>
-													<th>Invoice Number</th>
+													<th>Invoice/Receipt Number</th>
 													<th>Customer Info</th>
 													<th>Sales Amount</th>
 													<th>Payment Status</th>
@@ -62,7 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											?>
 												<tr>
 													<td><?=$invoice['invoice_issue_date']?></td>
-													<td><a href="<?=base_url('accounts/payment_confirmation/').$invoice['invoice_txn_id']?>"><?=$invoice['invoice_txn_id']?></a></td>
+													<td><a href="<?=base_url('accounts/payment_confirmation/').$invoice['invoice_txn_id']?>"><?=($invoice['invoice_type']=='CREDIT')?'Invoice':'Receipt'?>-<?=$invoice['invoice_txn_id']?></a></td>
 													<td><?=$invoice['customer_name']?></td>
 													<td>&#8358; <?=$invoice['invoice_total']?></td>
 													<td>

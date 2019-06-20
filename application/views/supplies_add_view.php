@@ -32,6 +32,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<input type="text" name="supply_date" class="datepicker" data-date-format="dd-mm-yyyy" value="<?=date('d-m-Y')?>" />
 							</div>
 						</div>
+						<div class="control-group">
+							<label class="control-label"> Supplier Name : </label>
+							<div class="controls">
+								<input type="text" name="supplier_name" required />
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label"> Supplier Phone : </label>
+							<div class="controls">
+								<input type="text" name="supplier_phone" required />
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label"> Supplier Email : </label>
+							<div class="controls">
+								<input type="email" name="supplier_email" required />
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">Supplier Address : </label>
+							<div class="controls">
+								<textarea name="supplier_address" required></textarea>
+							</div>
+						</div>
 						
 						<div class="control-group">
 							<table class="table" id="supply_table">

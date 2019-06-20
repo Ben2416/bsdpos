@@ -20,13 +20,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="widget-box">
 				<div class="widget-title">
 					<span class="icon"><i class="icon-th"></i></span>
-					<h5>Invoice Details</h5>
+					<h5><?=($invoice['invoice_type']=='CREDIT')?'Invoice':'Receipt'?> Details</h5>
 				</div>
 				<div class="widget-content">
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<th>Invoice Number</th>
+								<th><?=($invoice['invoice_type']=='CREDIT')?'Invoice':'Receipt'?> Number</th>
 								<th>Customer Info</th>
 								<th>Sales Amount</th>
 								<th>Amount Paid</th>
@@ -69,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<form class="form-horizontal" method="post" action="<?=base_url('accounts/payment_confirmation/').$invoice_id?>">
 						<?=validation_errors()?>
 						<div class="control-group">
-							<label class="control-label">Invoice Number : </label>
+							<label class="control-label"><?=($invoice['invoice_type']=='CREDIT')?'Invoice':'Receipt'?> Number : </label>
 							<div class="controls">
 								<input type="text" class="span11" placeholder="Payment Invoice" name="payment_invoice" value="<?=$invoice_id?>" disabled >
 							</div>
