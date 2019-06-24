@@ -41,20 +41,15 @@
 	$(document).ready(function(){
 	<?php if(@$sub_page == "add"): ?>
 		var admin_expenses = <?=$admin_expenses?>;
-		var fc_expenses = <?=$fc_expenses?>;
-		var sd_expenses = <?=$sd_expenses?>;
+		var operating_expenses = <?=$operating_expenses?>;
 		function expense_class(){
 			$('#expense_item').empty();
 			if($('#expense_class').val() == "Admin"){
 				$.each(admin_expenses, function(a, b){
 					$('#expense_item').append('<option>'+b.expense_item+'</option>');
 				});
-			}else if($('#expense_class').val() == "Finance Cost"){
-				$.each(fc_expenses, function(a, b){
-					$('#expense_item').append('<option>'+b.expense_item+'</option>');
-				});
 			}else{
-				$.each(sd_expenses, function(a, b){
+				$.each(operating_expenses, function(a, b){
 					$('#expense_item').append('<option>'+b.expense_item+'</option>');
 				});
 			}

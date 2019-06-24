@@ -22,7 +22,7 @@
     <li class="<?=($active=='products'?'active':'')?>"><a href="<?=base_url('products/index')?>"><i class="icon icon-th-large"></i> <span>Products</span></a></li>
     <li class="<?=($active=='expenses'?'active':'')?>"><a href="<?=base_url('expenses/index')?>"><i class="icon icon-bar-chart"></i> <span>Expenses</span></a></li>
     <!--<li class="<?=($active=='income'?'active':'')?>"><a href="<?=base_url('income/index')?>"><i class="icon icon-credit-card"></i> <span>Income</span></a></li>-->
-    <li class="<?=($active=='supplies'?'active':'')?>"> <a href="<?=base_url('supplies/index')?>"><i class="icon icon-truck"></i> <span>Supplies</span></a></li>
+    <li class="<?=($active=='supplies'?'active':'')?>"> <a href="<?=base_url('supplies/index')?>"><i class="icon icon-truck"></i> <span>Purchases</span></a></li>
     <!--<li class="<?=($active=='invoice'?'active':'')?>"> <a href="<?=base_url('invoice/index')?>"><i class="icon icon-info-sign"></i> <span>Invoices</span></a></li>-->
     <li class="<?=($active=='accounts'?'active':'')?>"> <a href="<?=base_url('accounts/index')?>"><i class="icon icon-money"></i> <span>Accounts</span></a></li>
   </ul>

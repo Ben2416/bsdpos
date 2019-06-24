@@ -50,8 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<div class="controls">
 								<select name="expense_class" id="expense_class">
 									<option>Admin</option>
-									<option>Sales and Distribution</option>
-									<option>Finance Cost</option>
+									<option>Operating</option>
 								</select>
 							</div>
 						</div>

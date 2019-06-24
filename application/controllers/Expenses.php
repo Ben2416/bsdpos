@@ -25,8 +25,7 @@ class Expenses extends CI_Controller {
 		$data['sub_page'] = "add";
 		$data['warehouses'] = $this->expenses->getWarehouses();
 		$data['admin_expenses'] = json_encode($this->expenses->getExpenseItems('Admin'));
-		$data['fc_expenses'] = json_encode($this->expenses->getExpenseItems('Finance Cost'));
-		$data['sd_expenses'] = json_encode($this->expenses->getExpenseItems('Sales and Distribution'));
+		$data['operating_expenses'] = json_encode($this->expenses->getExpenseItems('Operating'));
 		
 		$this->form_validation->set_error_delimiters('<div class="alert alert-error"><button class="close" data-dismiss="alert">×</button>','</div>');
 		$this->form_validation->set_rules('expense_date', 'Expense Date', 'trim|required');

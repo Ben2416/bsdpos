@@ -87,7 +87,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										</div>
 									</div>
 									<div class="widget-title"> <a data-toggle="collapse" href="#collapseTwo<?=$i?>"> <span class="icon"><i class="icon-arrow-right"></i></span>
-										<h5>Sales and Distribution Expenses</h5>
+										<h5>Operating Expenses</h5>
 										</a> 
 									</div>
 									<div id="collapseTwo<?=$i?>" class="collapse">
@@ -109,7 +109,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													<?php foreach($expenses as $expense): 
 													if($expense['expense_warehouse'] != $warehouses[$i]['warehouse_id'])
 														continue;
-													if($expense['expense_class'] != 'Sales and Distribution')
+													if($expense['expense_class'] != 'Operating')
 														continue;
 													?>
 													<tr>
@@ -120,44 +120,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												</tbody>
 											</table>
 										</div>
-										</div>
-									</div>
-									<div class="widget-title"> <a data-toggle="collapse" href="#collapseThree<?=$i?>"> <span class="icon"><i class="icon-arrow-right"></i></span>
-										<h5>Finance Cost Expenses</h5>
-										</a> 
-									</div>
-									<div id="collapseThree<?=$i?>" class="collapse">
-										<div class="widget-content"> 
-										
-											<div class="widget-content"> 
-											<div class="controls controls-row">
-												<label class="span1 m-wrap">Dates : </label> <input type="text" placeholder="From date" class="m-wrap datepicker" /> | 
-												<input type="text" placeholder="To date" class="m-wrap datepicker" /> 
-												<button class="btn btn-success m-wrap">Get Expenses</button>
-											</div>
-											<table class="table table-bordered">
-												<thead>
-													<tr>
-														<th>Expense Itme</th>
-														<th>Amount</th>
-													</tr>
-												</thead>
-												<tbody>
-													<?php foreach($expenses as $expense): 
-													if($expense['expense_warehouse'] != $warehouses[$i]['warehouse_id'])
-														continue;
-													if($expense['expense_class'] != 'Finance Cost')
-														continue;
-													?>
-													<tr>
-														<td><?=$expense['expense_item']?></td>
-														<td>&#8358; <?=number_format($expense['expense_amount'], '2','.',',')?></td>
-													</tr>
-													<?php endforeach; ?>
-												</tbody>
-											</table>
-										</div>
-											
 										</div>
 									</div>
 								</div>

@@ -5,9 +5,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div id="breadcrumb"> 
 		<a href="<?=base_url('dashboard')?>" title="Go to Users" class="tip-bottom">
 			<i class="icon-home"></i> Dashboard</a>
-		<a href="" class="current"> Supplies</a>
+		<a href="" class="current"> Purchases</a>
 	</div>
-	<h1>Supplies</h1>
+	<h1>Purchases</h1>
   </div>
 <!--End-breadcrumbs-->
 
@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="widget-box">
 				<div class="widget-title">
 					<span class="icon"><i class="icon-th"></i></span>
-					<h5>Warehouse Supplies</h5>
+					<h5>Warehouse Purchases</h5>
 				</div>
 				<div class="widget-content nopadding">
 					<div class="widget-box">
@@ -43,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<!--<p> <?=$warehouses[$i]['warehouse_name']?></p>-->
 								
 								<div class="">
-									<a href="<?=base_url('supplies/add/'.$warehouses[$i]['warehouse_id'])?>" class="btn btn-primary" ><i class="icon icon-plus"></i> Add Supply</a> 
+									<a href="<?=base_url('supplies/add/'.$warehouses[$i]['warehouse_id'])?>" class="btn btn-primary" ><i class="icon icon-plus"></i> Add Purchase</a> 
 								</div>
 								
 								<div class="widget-box">
