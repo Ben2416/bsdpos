@@ -58,4 +58,50 @@ class Invoice_model extends CI_Model{
 		else return true;
 	}
 	
+	public function editInvoice($invoice_receipt_id, $customer, $invoice, $invoice_items, $invalidproducts){
+		
+		$this->db->trans_start();//(TRUE);for test purposes
+		
+		$this->db->where('customer_id', $customer['customer_id']);
+		$this->db->update('customers',$customer);
+		
+		$this->db->where('invoice_txn_id', $invoice_receipt_id);
+		$invoice['invoice_client'] = $customer['customer_id'];//add customer id to invoice
+		$this->db->update($this->table, $invoice);
+		
+		
+		for($i=0; $i<count($invoice_items); $i++){
+			$udata = array();
+			foreach($invoice_items[$i] as $k=>$v){
+				$udata[] = $k.'='."'".$v."'"; 
+			}
+			$sql = $this->db->insert_string('invoice_items', $invoice_items[$i])." ON DUPLICATE KEY UPDATE ".implode(', ',$udata);
+			$insert = $this->db->query($sql);
+		}
+		
+		foreach($invalidproducts as $ip){
+			$this->db->where('invoice_item_invoice', $invoice_receipt_id);
+			$this->db->where('invoice_item_product', $ip);
+			$this->db->delete('invoice_items');
+		}
+		
+		$this->db->trans_complete();
+		if($this->db->trans_status() === FALSE) return false;
+		else return true;
+	}
+	
+	public function deleteInvoice($invoice){
+		$this->db->trans_start();
+		
+		$this->db->where('invoice_txn_id', $invoice);
+		$this->db->delete($this->table);
+		
+		$this->db->where('invoice_item_invoice', $invoice);
+		$this->db->delete('invoice_items');
+		
+		$this->db->trans_complete();
+		if($this->db->trans_status() === FALSE) return false;
+		else return true;
+	}
+	
 }

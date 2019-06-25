@@ -20,11 +20,11 @@ class Dashboard extends CI_Controller {
 		$data['expenses_today'] = $this->dashboard->getExpensesToday(date('d-m-Y'));		
 		
 		
-		$data['expenses_week'] = $this->dashboard->getExpensesWeek( date('d-m-Y', strtotime('-17 days')), date('d-m-Y') );
+		$data['expenses_week'] = $this->dashboard->getExpensesWeek( date('d-m-Y', strtotime('-7 days')), date('d-m-Y') );
 		
 		//date('Y-m-d', strtotime('-7 days'))
-		$data['pos_sales_week'] = $this->dashboard->getPosSalesWeek( date('d-m-Y', strtotime('-17 days')), date('d-m-Y') );
-		$data['credit_sales_week'] = $this->dashboard->getCreditSalesWeek( date('d-m-Y', strtotime('-17 days')), date('d-m-Y') );
+		$data['pos_sales_week'] = $this->dashboard->getPosSalesWeek( date('d-m-Y', strtotime('-7 days')), date('d-m-Y') );
+		$data['credit_sales_week'] = $this->dashboard->getCreditSalesWeek( date('d-m-Y', strtotime('-7 days')), date('d-m-Y') );
 		//print_r($data['credit_sales_week']);exit;
 		
 		$this->load->view("header_view", $data);

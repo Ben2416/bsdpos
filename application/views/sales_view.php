@@ -52,12 +52,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div class="widget-box">
 									<div class="widget-content nopadding">
 										
-										<form class="form-horizontal">
+										<form class="form-horizontal" action="<?=current_url()?>" method="post">
 											<div class="controls controls-row">
 												<label class="span1 m-wrap">Date</label>
-												<input type="text" class="span3 m-wrap datepicker" data-date="<?=date('d-m-Y')?>" data-date-format="dd-mm-yyyy" placeholder="start date" />
+												<input type="text" name="start_date" class="span3 m-wrap datepicker" data-date="<?=date('d-m-Y')?>" data-date-format="dd-mm-yyyy" placeholder="start date" required />
 												<label class="span1 m-wrap">To</label>
-												<input type="text" class="span3 m-wrap datepicker" data-date="01-02-2013" data-date-format="dd-mm-yyyy" placeholder="enddate" />
+												<input type="text" name="end_date" class="span3 m-wrap datepicker" data-date="01-02-2013" data-date-format="dd-mm-yyyy" placeholder="enddate" required />
 												<button class="btn btn-primary span3 m-wrap">Get <?=($sales_type=='CREDIT')?'Invoices':'Receipts'?></button>
 											</div>
 										</form>
@@ -70,6 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												<table class="table table-bordered data-table">
 													<thead>
 														<tr>
+															<th>Issue Date</th>
 															<th><?=($sales_type=='CREDIT')?'Invoice':'Receipt'?> Number</th>
 															<th>Category</th>
 															<th>Type</th>
@@ -84,19 +85,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																continue;
 														?>
 														<tr>
+															<td><?=$invoice['invoice_issue_date']?></td>
 															<td><a href="<?=base_url('invoice/get/').$invoice['invoice_txn_id']?>/<?=$sales_type?>"><?=$invoice['invoice_txn_id']?></a></td>
 															<td><?=$invoice['invoice_category']?></td>
 															<td><?=$invoice['invoice_type']?></td>
 															<td><?=$invoice['customer_name']?></td>
 															<td>&#8358; <?=number_format($invoice['invoice_total'], 2, '.', ',')?></td>
 															<td>
-																<a href="#"><i class="icon icon-edit"></i> Edit</a> 
+																<a href="<?=base_url('invoice/edit/').$invoice['invoice_category'].'/'.(($sales_type=='CREDIT')?'CREDIT':'POS').'/'.$invoice['invoice_txn_id']?>"><i class="icon icon-edit"></i> Edit</a> 
 																| 
-																<a href="#"><i class="icon icon-trash"></i> Remove</a> 
+																<a href="#deleteInvoice<?=$invoice['invoice_id']?>" data-toggle="modal"><i class="icon icon-trash"></i> Remove</a> 
 																<?php if($sales_type=='CREDIT'):?>
 																| 
-																<a href="<?=base_url('stocks/return/').$invoice['invoice_txn_id']?>"><i class="icon icon-shopping-cart"></i> Stock Return</a></td>
+																<a href="<?=base_url('stocks/return/').$invoice['invoice_txn_id']?>"><i class="icon icon-shopping-cart"></i> Stock Return</a>
 																<?php endif;?>
+																<div id="deleteInvoice<?=$invoice['invoice_id']?>" class="modal hide">
+																	<div class="modal-header">
+																		<button data-dismiss="modal" class="close" type="button">×</button>
+																		<h3>Confirm Invoice Delete</h3>
+																	</div>
+																	<div class="modal-body">
+																		<p>Are you sure you want to delete this invoice?</p>
+																	</div>
+																	<div class="modal-footer"> 
+																		<a href="<?=base_url('invoice/delete/'.$sales_type.'/'.$invoice['invoice_txn_id'])?>" class="btn btn-primary" >Confirm</a> 
+																		<a data-dismiss="modal" class="btn" href="#">Cancel</a> 
+																	</div>
+																</div>
+															</td>
 														</tr>
 														<?php endforeach; ?>
 													</tbody>

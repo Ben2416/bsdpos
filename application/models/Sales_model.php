@@ -19,4 +19,14 @@ class Sales_model extends CI_Model{
 		return $query->result_array();
 	}
 	
+	public function getInvoicesInDates($sales_type, $from, $to){
+		$this->db->join('customers', 'invoices.invoice_client=customers.customer_id');
+		$this->db->join('warehouses', 'invoices.invoice_warehouse=warehouses.warehouse_id');
+		$this->db->where('invoices.invoice_type', $sales_type);
+		$this->db->where("STR_TO_DATE(invoice_issue_date,'%d-%m-%Y') BETWEEN STR_TO_DATE('".$from."', '%d-%m-%Y') AND STR_TO_DATE('".$to."', '%d-%m-%Y')", "", FALSE);
+		$this->db->order_by('invoice_id', 'DESC');
+		$query = $this->db->get('invoices');
+		return $query->result_array();
+	}
+	
 }
