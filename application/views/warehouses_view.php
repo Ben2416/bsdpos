@@ -38,7 +38,55 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<td><?=$warehouse['warehouse_id']?></td>
 								<td><?=$warehouse['warehouse_name']?></td>
 								<td><?=$warehouse['warehouse_address']?></td>
-								<td><a href="#">Edit</a> | <a href="#">Remove</a></td>
+								<td>
+									<a href="#editWarehouse<?=$warehouse['warehouse_id']?>" data-toggle="modal">Edit</a>
+									<div id="editWarehouse<?=$warehouse['warehouse_id']?>" class="modal hide">
+										<form action="<?=base_url('warehouse/edit/'.$warehouse['warehouse_id'])?>" method="post">
+										<div class="modal-header">
+											<button data-dismiss="modal" class="close" type="button">×</button>
+											<h3>Edit Warehouse</h3>
+										</div>
+										<div class="modal-body">
+											<p>
+												<div class="control-group">
+													<label class="control-label span4">Warehouse Name : </label>
+													<div class="controls">
+														<input type="text" name="warehouse_name" class="span8" value="<?=$warehouse['warehouse_name']?>" />
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label span4">Warehouse Address : </label>
+													<div class="controls">
+														<textarea name="warehouse_address" class="span8"><?=$warehouse['warehouse_address']?></textarea>
+													</div>
+												</div>
+											</p>
+										</div>
+										<div class="modal-footer"> 
+											<button type="submit" class="btn btn-primary" >Confirm</button> 
+											<a data-dismiss="modal" class="btn" href="#">Cancel</a> 
+										</div>
+										</form>
+									</div>
+									
+									| 
+									<a href="#deleteWarehouse<?=$warehouse['warehouse_id']?>" data-toggle="modal">Remove</a>
+									<div id="deleteWarehouse<?=$warehouse['warehouse_id']?>" class="modal hide">
+										<div class="modal-header">
+											<button data-dismiss="modal" class="close" type="button">×</button>
+											<h3>Confirm Warehouse Delete</h3>
+										</div>
+										<div class="modal-body">
+											<p>Are you sure you want to delete this Warehouse (<?=$warehouse['warehouse_name']?>)?<br/>
+												Deleting this warehouse will remove all of its associations: Users, Products, Sales, etc
+											</p>
+										</div>
+										<div class="modal-footer"> 
+											<a href="<?=base_url('warehouse/remove/'.$warehouse['warehouse_id'])?>" class="btn btn-primary" >Confirm</a> 
+											<a data-dismiss="modal" class="btn" href="#">Cancel</a> 
+										</div>
+									</div>
+								</td>
 							</tr>
 							<?php endforeach; ?>
 						</tbody>

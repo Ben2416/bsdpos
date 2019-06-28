@@ -42,9 +42,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<div id="tab<?=$i?>" class="tab-pane <?=($i==0)?'active':''?>">
 								<!--<p> <?=$warehouses[$i]['warehouse_name']?></p>-->
 								
+								<?php if($this->session->user_role == 1 || $this->session->user_role == 2 || $this->session->user_role == 3): ?>
 								<div class="">
 									<a href="<?=base_url('supplies/add/'.$warehouses[$i]['warehouse_id'])?>" class="btn btn-primary" ><i class="icon icon-plus"></i> Add Purchase</a> 
 								</div>
+								<?php endif;?>
 								
 								<div class="widget-box">
 									<div class="widget-title">

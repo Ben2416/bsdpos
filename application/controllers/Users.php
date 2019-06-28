@@ -17,6 +17,9 @@ class Users extends CI_Controller{
 	
 	public function index(){
 		$data['active'] = 'users';
+		$data['roles'] = $this->users->getRoles();
+		$data['warehouses'] = $this->users->getWarehouses();
+		
 		$data['users'] = $this->users->getUsers();
 		$this->load->view("header_view", $data);
 		$this->load->view("sidebar_view");
@@ -56,6 +59,7 @@ class Users extends CI_Controller{
 	public function add(){
 		$data['active'] = 'users';
 		$data['roles'] = $this->users->getRoles();
+		$data['warehouses'] = $this->users->getWarehouses();
 		
 		$this->form_validation->set_error_delimiters('','');
 		$this->form_validation->set_rules('firstname', "First name", 'trim|required');
@@ -72,18 +76,50 @@ class Users extends CI_Controller{
 			$this->load->view("users_add_view");
 			$this->load->view("footer_view");
 		}else{
-			redirect(base_url('users'), 'refresh');
+			$add_user = $this->users->addUser();
+			if($add_user){
+				$this->session->set_flashdata('success', 'User added successfully!');
+				redirect(base_url('users'), 'refresh');
+			}else{
+				$this->session->set_flashdata('error', 'User details not added.');
+				redirect(base_url('users'), 'refresh');
+			}
 		}
 		
 		
 	}
 	
-	public function edit($id){
+	public function edit($user){
+		$this->form_validation->set_rules('user_firstname', 'First Name', 'trim|required');
+		$this->form_validation->set_rules('user_lastname', 'Last Name', 'trim|required');
+		$this->form_validation->set_rules('user_email', 'Email', 'trim|required');
+		$this->form_validation->set_rules('user_phone', 'Phone', 'trim|required');
+		$this->form_validation->set_rules('user_address', 'Address', 'trim|required');
+		if($this->form_validation->run() === FALSE){
+			$this->session->set_flashdata('error', 'User values is required.');
+			redirect(base_url('users/index'), 'refresh');
+		}else{
+			$edit_user = $this->users->editUser($user);
+			if($edit_user){
+				$this->session->set_flashdata('success', 'User edited successfully!');
+				redirect(base_url('users/index'), 'refresh');
+			}else{
+				$this->session->set_flashdata('error', 'User details not modified');
+				redirect(base_url('users/index'), 'refresh');
+			}
+		}
 		
 	}
 	
-	public function remove($id){
-		
+	public function remove($user){
+		$delete_user = $this->users->removeUser($user);
+		if($delete_user){
+			$this->session->set_flashdata('success', 'Warehouse deleted successfully!');
+			redirect(base_url('users/index'), 'refresh');
+		}else{
+			$this->session->set_flashdata('error', 'Warehouse not deleted');
+			redirect(base_url('users/index'), 'refresh');
+		}
 	}
 	
 	public function logout(){

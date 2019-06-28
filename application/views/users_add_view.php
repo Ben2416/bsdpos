@@ -77,9 +77,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<label class="control-label">Role :</label>
 							<div class="controls">
 								<select name="role" class="span11">
-									<?php foreach($roles as $role):?>
-										<option value="<?=$role['role_id']?>" <?=set_select('role', $role['role_id'])?>><?=$role['role_name']?></option>
-									<?php endforeach;?>
+								<?php foreach($roles as $role):?>
+									<option value="<?=$role['role_id']?>" <?=set_select('role', $role['role_id'])?>><?=$role['role_name']?></option>
+								<?php endforeach;?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Warehouse :</label>
+							<div class="controls">
+								<select name="warehouse" class="span11">
+								<?php foreach($warehouses as $warehouse):?>
+									<option value="<?=$warehouse['warehouse_id']?>" <?=set_select('warehouse', $warehouse['warehouse_id'])?>><?=$warehouse['warehouse_name']?></option>
+								<?php endforeach;?>
+									<option value="0" <?=set_select('warehouse', '0')?> >All</option>
 								</select>
 							</div>
 						</div>

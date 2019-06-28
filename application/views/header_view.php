@@ -1,4 +1,8 @@
 <?php
+if(!isset($this->session->user_role))
+	redirect('users/logout', 'refresh');
+?>
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <html lang="en">

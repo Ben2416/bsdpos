@@ -118,4 +118,34 @@ class Stocks extends CI_Controller {
 		$this->load->view('stocks_return_invoice_view');
 		$this->load->view('footer_view');
 	}
+	
+	public function update($product, $warehouse){
+		$this->form_validation->set_rules('stock_quantity', 'Stock Quantity', 'trim|required');
+		if($this->form_validation->run() == FALSE){
+			$this->session->set_flashdata('error', 'Stock Quantity is required.');
+			redirect(base_url('stocks/index'), 'refresh');
+		}else{
+			$quantity = $this->input->post("stock_quantity", true);
+			$update_stock = $this->stocks->updateStock($product, $warehouse, $quantity);
+			if($update_stock){
+				$this->session->set_flashdata('success', 'Stock updated successfully!');
+				redirect(base_url('stocks/index'), 'refresh');
+			}else{
+				$this->session->set_flashdata('error', 'Stock not updated');
+				redirect(base_url('stocks/index'), 'refresh');
+			}
+		}
+	}
+	
+	public function delete($product, $warehouse){
+		$delete_stock = $this->stocks->deleteStock($product, $warehouse);
+		if($delete_stock){
+			$this->session->set_flashdata('success', 'Stock deleted successfully!');
+			redirect(base_url('stocks/index'), 'refresh');
+		}else{
+			$this->session->set_flashdata('error', 'Stock not deleted');
+			redirect(base_url('stocks/index'), 'refresh');
+		}
+	}
+	
 }

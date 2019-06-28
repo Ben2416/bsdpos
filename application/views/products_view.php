@@ -45,6 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<td>&#8358; <?=$product['product_supply_price']?></td>
 								<td>&#8358; <?=$product['product_retail_price']?></td>
 								<td>
+									<?php if($this->session->user_role == 1 || $this->session->user_role == 2 || $this->session->user_role == 3): ?>
 									<a href="<?=base_url('products/edit/'.$product['product_id'])?>"><i class="icon icon-edit"></i> Edit</a> | 
 									<a href="#deleteProduct<?=$product['product_id']?>" data-toggle="modal"><i class="icon icon-trash"></i> Remove</a>
 									<div id="deleteProduct<?=$product['product_id']?>" class="modal hide">
@@ -60,7 +61,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											<a data-dismiss="modal" class="btn" href="#">Cancel</a> 
 										</div>
 									</div>
-
+									<?php else: ?>
+										<span class="help-text">None</span>
+									<?php endif; ?>
 								</td>
 							</tr>
 							<?php endforeach; ?>

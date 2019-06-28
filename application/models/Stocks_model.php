@@ -139,4 +139,17 @@ class Stocks_model extends CI_Model{
 		return $query->result_array();
 	}
 	
+	public function updateStock($product, $warehouse, $quantity){
+		$this->db->set('stock_quantity', $quantity);
+		$this->db->where('stock_product', $product);
+		$this->db->where('stock_warehouse', $warehouse);
+		return $this->db->update($this->table);
+	}
+	
+	public function deleteStock($product, $warehouse){
+		$this->db->where('stock_product', $product);
+		$this->db->where('stock_warehouse', $warehouse);
+		return $this->db->delete($this->table);
+	}
+	
 }

@@ -18,4 +18,24 @@ class Warehouse_model extends CI_Model{
 		return $this->db->insert($this->table, $data);
 	}
 	
+	public function editWarehouse($warehouse){
+		$this->db->set('warehouse_name', $this->input->post('warehouse_name', true));
+		$this->db->set('warehouse_address', $this->input->post('warehouse_address', true));
+		$this->db->where('warehouse_id', $warehouse);
+		return $this->db->update($this->table);
+	}
+	
+	public function removeWarehouse($warehouse){
+		$this->db->trans_start();
+		
+		$this->db->where('warehouse_id', $warehouse);
+		$this->db->delete($this->table);
+		
+		
+		
+		$this->db->trans_complete();
+		if($this->db->trans_status() === FALSE) return false;
+		else return true;
+	}
+	
 }

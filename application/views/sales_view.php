@@ -40,6 +40,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php for($i=0; $i<count($warehouses); $i++): ?>
 							<div id="tab<?=$i?>" class="tab-pane <?=($i==0)?'active':''?>">
 								<!--<p> <?=$warehouses[$i]['warehouse_name']?></p>-->
+								
+								<?php if($this->session->user_role == 1 || $this->session->user_role == 2 || $this->session->user_role == 5): ?>
 								<div class="btn-icon-pg">
 								<ul class="">
 									<li><a href="<?=base_url('invoice/create/supply/')?><?=($sales_type=='CREDIT')?'CREDIT':'POS'?>" ><i class="icon icon-plus"></i> Add Supply <?=($sales_type=='CREDIT')?'Invoice':'Receipt'?></a></li>
@@ -47,6 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<li><a href="<?=base_url('invoice/create/retail/')?><?=($sales_type=='CREDIT')?'CREDIT':'POS'?>" ><i class="icon icon-plus"></i> Add Retail <?=($sales_type=='CREDIT')?'Invoice':'Receipt'?></a></li>
 								</ul>
 								</div>
+								<?php endif; ?>
 								
 								
 								<div class="widget-box">
@@ -92,6 +95,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 															<td><?=$invoice['customer_name']?></td>
 															<td>&#8358; <?=number_format($invoice['invoice_total'], 2, '.', ',')?></td>
 															<td>
+																<?php if($this->session->user_role == 1 || $this->session->user_role == 2 || $this->session->user_role == 5): ?>
 																<a href="<?=base_url('invoice/edit/').$invoice['invoice_category'].'/'.(($sales_type=='CREDIT')?'CREDIT':'POS').'/'.$invoice['invoice_txn_id']?>"><i class="icon icon-edit"></i> Edit</a> 
 																| 
 																<a href="#deleteInvoice<?=$invoice['invoice_id']?>" data-toggle="modal"><i class="icon icon-trash"></i> Remove</a> 
@@ -112,6 +116,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 																		<a data-dismiss="modal" class="btn" href="#">Cancel</a> 
 																	</div>
 																</div>
+																<?php else: ?>
+																	<span class="help-text">None</span>
+																<?php endif; ?>
 															</td>
 														</tr>
 														<?php endforeach; ?>

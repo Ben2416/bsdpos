@@ -42,9 +42,14 @@ class Supplies_model extends CI_Model{
 			'supplier_email' => $this->input->post('supplier_email', true),
 			'supplier_address' => $this->input->post('supplier_address', true)
 		);
-		$this->db->insert('suppliers', $supplier);
+		$udata = array();
+		foreach($supplier as $k=>$v){
+			$udata[] = $k.'='."'".$v."'"; 
+		}
+		$sql = $this->db->insert_string('suppliers', $supplier)." ON DUPLICATE KEY UPDATE ".implode(', ', $udata);
+		$insert = $this->db->query($sql);
+		//$this->db->insert('suppliers', $supplier);
 		$supplier_id = $this->db->insert_id();
-		
 		
 		for($i=0; $i<$items; $i++){
 			$supply_items[] = array(
@@ -72,7 +77,13 @@ class Supplies_model extends CI_Model{
 			$this->db->set('stock_quantity', 'stock_quantity+'.$su['stock_quantity'], FALSE);
 			$this->db->where('stock_product', $su['stock_product']);
 			$this->db->where('stock_warehouse', $su['stock_warehouse']);
-			$this->db->update('stocks');
+			$update = $this->db->update('stocks');
+			if($this->db->affected_rows() == 0){
+				$this->db->set('stock_quantity', $su['stock_quantity']);
+				$this->db->set('stock_product', $su['stock_product']);
+				$this->db->set('stock_warehouse', $su['stock_warehouse']);
+				$this->db->insert('stocks');
+			}
 		}
 		
 		$this->db->trans_complete();
