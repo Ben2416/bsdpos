@@ -6,6 +6,8 @@ class Accounts_model extends CI_Model{
 	private $table = "accounts";
 	
 	public function getWarehouses(){
+		if($this->session->user_role != 1 )
+			$this->db->where('warehouse_id', $this->session->user_warehouse);
 		$query = $this->db->get('warehouses');
 		return $query->result_array();
 	}
@@ -13,6 +15,8 @@ class Accounts_model extends CI_Model{
 	public function getInvoices(){
 		$this->db->join('customers', 'invoices.invoice_client=customers.customer_id');
 		$this->db->join('warehouses', 'invoices.invoice_warehouse=warehouses.warehouse_id');
+		if($this->session->user_role != 1 )
+			$this->db->where('invoice_warehouse', $this->session->user_warehouse);
 		$this->db->order_by('invoice_id', 'DESC');
 		$query = $this->db->get('invoices');
 		return $query->result_array();
@@ -33,6 +37,8 @@ class Accounts_model extends CI_Model{
 	
 	public function getPayments($invoice){
 		$this->db->where('payment_invoice', $invoice);
+		if($this->session->user_role != 1 )
+			$this->db->where('payment_warehouse', $this->session->user_warehouse);
 		$query = $this->db->get('payments');
 		return $query->result_array();
 	}

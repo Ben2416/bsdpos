@@ -6,11 +6,15 @@ class Expenses_model extends CI_Model{
 	private $table = "expenses";
 	
 	public function getWarehouses(){
+		if($this->session->user_role != 1 )
+			$this->db->where('warehouse_id', $this->session->user_warehouse);
 		$query = $this->db->get('warehouses');
 		return $query->result_array();
 	}
 	
 	public function getExpenses(){
+		if($this->session->user_role != 1 )
+			$this->db->where('expense_warehouse', $this->session->user_warehouse);
 		$query = $this->db->get($this->table);
 		return $query->result_array();
 	}

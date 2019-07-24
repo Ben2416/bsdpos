@@ -6,6 +6,8 @@ class Supplies_model extends CI_Model{
 	private $table = "supplies";
 	
 	public function getWarehouses(){
+		if($this->session->user_role != 1 )
+			$this->db->where('warehouse_id', $this->session->user_warehouse);
 		$query = $this->db->get('warehouses');
 		return $query->result_array();
 	}
@@ -13,6 +15,8 @@ class Supplies_model extends CI_Model{
 	public function getSupplies(){
 		$this->db->join('products', $this->table.'.supply_item=products.product_id');
 		$this->db->join('suppliers', $this->table.'.supply_supplier=suppliers.supplier_id');
+		if($this->session->user_role != 1 )
+			$this->db->where('supply_warehouse', $this->session->user_warehouse);
 		$this->db->order_by('supply_batch_id', 'DESC');
 		$query = $this->db->get($this->table);
 		return $query->result_array();
@@ -21,6 +25,8 @@ class Supplies_model extends CI_Model{
 	public function getLastSupplyBatchId(){
 		$this->db->select('supply_batch_id');
 		$this->db->from($this->table);
+		if($this->session->user_role != 1 )
+			$this->db->where('supply_warehouse', $this->session->user_warehouse);
 		$this->db->order_by('supply_id', 'DESC');
 		$this->db->limit(1);
 		$query = $this->db->get();

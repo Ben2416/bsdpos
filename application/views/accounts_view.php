@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<?php for($i=0; $i<count($warehouses); $i++): // foreach($warehouses as $wh): ?>
 								<li class="<?=($i==0)?'active':''?>"><a data-toggle="tab" href="#tab<?=$i?>"><?=$warehouses[$i]['warehouse_name']?></a></li>
 								<?php endfor;//endforeach; ?>
-								<?php if(count($warehouses)>0):?>
+								<?php if(count($warehouses)>1):?>
 								<li><a data-toggle="tab" href="#tab<?=count($warehouses)?>">Summation</a></li>
 								<?php endif;?>
 							</ul>
@@ -91,7 +91,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 							</div>
 							<?php endfor;?>
-							<?php if(count($warehouses)>0):?>
+							<?php if(count($warehouses)>1):?>
 								<div id="tab<?=count($warehouses)?>" class="tab-pane">
 								<p> Summation</p>
 							</div>

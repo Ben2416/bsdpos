@@ -12,6 +12,8 @@ class Products_model extends CI_Model{
 	
 	public function getProducts(){
 		$this->db->join('warehouses', $this->table.'.product_warehouse=warehouses.warehouse_id');
+		if($this->session->user_role != 1)
+			$this->db->where('product_warehouse', $this->session->user_warehouse);
 		$query = $this->db->get($this->table);
 		return $query->result_array();
 	}
@@ -25,6 +27,8 @@ class Products_model extends CI_Model{
 	//for auto complete
 	public function getProductsWhere($product){
 		$this->db->like('product_name', $product);
+		if($this->session->user_role != 1)
+			$this->db->where('product_warehouse', $this->session->user_warehouse);
 		$query = $this->db->get($this->table);
 		return $query->result_array();
 	}

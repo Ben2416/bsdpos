@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<li class="bg_lb "><a><i class="icon-copy"></i> <span class="label label-important"><?=$invoices_today?></span> Invoices/Receipts Today</a></li>
 			<li class="bg_lg "><a><i class="icon-book"></i> <span class="label label-warning"><?=$invoices_month?></span> Invoices/Receipts This Month</a></li>
 			<li class="bg_ly span2"><a><i class="icon-shopping-cart"></i> <span class="label label-success">&#8358; <?=number_format($sales_today, 2, '.',',')?></span> Sales Today</a></li>
-			<li class="bg_lr span2"><a><i class="icon-truck"></i> <span class="label label-info">&#8358; <?=number_format($sales_month, 2, '.',',')?></span> Sales This Month</a></li>
+			<li class="bg_lr "><a><i class="icon-truck"></i> <span class="label label-info">&#8358; <?=number_format($sales_month, 2, '.',',')?></span> Sales This Month</a></li>
 			<li class="bg_ls span2"><a><i class="icon-money"></i> <span class="label label-important">&#8358; <?=number_format($expenses_today, 2, '.',',')?></span>Expenses Today</a></li>
 		</ul>
 	</div>

@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<?php for($i=0; $i<count($warehouses); $i++): // foreach($warehouses as $wh): ?>
 								<li class="<?=($i==0)?'active':''?>"><a data-toggle="tab" href="#tab<?=$i?>"><?=$warehouses[$i]['warehouse_name']?></a></li>
 								<?php endfor;//endforeach; ?>
-								<?php if(count($warehouses)>0):?>
+								<?php if(count($warehouses)>1):?>
 								<li><a data-toggle="tab" href="#tab<?=count($warehouses)?>">Summation</a></li>
 								<?php endif;?>
 							</ul>
@@ -41,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<div id="tab<?=$i?>" class="tab-pane <?=($i==0)?'active':''?>">
 								<!--<p> <?=$warehouses[$i]['warehouse_name']?></p>-->
 								
-								<?php if($this->session->user_role == 1 || $this->session->user_role == 2 || $this->session->user_role == 5): ?>
+								<?php if($this->session->user_role == 1 || $this->session->user_role == 2 || $this->session->user_role == 5 || $this->session->user_role == 6): ?>
 								<div class="btn-icon-pg">
 								<ul class="">
 									<li><a href="<?=base_url('invoice/create/supply/')?><?=($sales_type=='CREDIT')?'CREDIT':'POS'?>" ><i class="icon icon-plus"></i> Add Supply <?=($sales_type=='CREDIT')?'Invoice':'Receipt'?></a></li>
@@ -132,7 +132,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								
 							</div>
 							<?php endfor;?>
-							<?php if(count($warehouses)>0):?>
+							<?php if(count($warehouses)>1):?>
 								<div id="tab<?=count($warehouses)?>" class="tab-pane">
 								<p> Summation</p>
 							</div>

@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<?php if($this->session->user_warehouse != 0 && $warehouses[$i]['warehouse_id'] != $this->session->user_warehouse)continue; ?>
 								<li class="<?=($i==0)?'active':''?>"><a data-toggle="tab" href="#tab<?=$i?>"><?=$warehouses[$i]['warehouse_name']?></a></li>
 								<?php endfor;//endforeach; ?>
-								<?php if(count($warehouses)>0):?>
+								<?php if(count($warehouses)>1):?>
 								<?php if($this->session->user_role ==1 || $this->session->user_role == 2): ?>
 								<li><a data-toggle="tab" href="#tab<?=count($warehouses)?>">Summation</a></li>
 								<?php endif;?>
@@ -133,7 +133,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								
 							</div>
 							<?php endfor;?>
-							<?php if(count($warehouses)>0):?>
+							<?php if(count($warehouses)>1):?>
 							<?php if($this->session->user_role ==1 || $this->session->user_role == 2): ?>
 							<div id="tab<?=count($warehouses)?>" class="tab-pane">
 								<p> Summation</p>

@@ -41,7 +41,7 @@
 	</li>
 	<?php endif; ?>
 	
-    <?php if($this->session->user_role == 1 || $this->session->user_role == 2):?>
+    <?php if($this->session->user_role == 1):?>
 	<li class="<?=($active=='warehouse'?'active':'')?>"><a href="<?=base_url('warehouse/index')?>"><i class="icon icon-home"></i> <span>Warehouses</span></a></li>
 	<?php endif; ?>
 	
