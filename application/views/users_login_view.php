@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ERROR | E_PARSE | E_CORE_ERROR);
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 <html lang="en">

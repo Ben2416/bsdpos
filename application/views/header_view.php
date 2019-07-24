@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ERROR | E_PARSE | E_CORE_ERROR);
 if(!isset($this->session->user_role))
 	redirect('users/logout', 'refresh');
 ?>
